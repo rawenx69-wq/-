@@ -103,6 +103,53 @@
             text-align: center;
         }
 
+        /* لۆگۆی گۆشەی چەپی سەرەوە بۆ شێخ مەحمود و تیکتۆکەکەت */
+        .hero-badge {
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            background: rgba(15, 15, 25, 0.85);
+            backdrop-filter: blur(8px);
+            color: #ffcc00;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 204, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: right;
+        }
+
+        .hero-badge img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffcc00;
+        }
+
+        .hero-badge a {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            text-decoration: none;
+            transition: 0.2s;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .hero-badge a:hover {
+            background: #ffcc00;
+            color: #000;
+        }
+
         .social-links {
             margin-top: 8px;
             display: flex;
@@ -126,18 +173,20 @@
             color: #000;
         }
 
-        /* خۆرەکەی ئاڵای کوردستان لە ناوەڕاستدا لە پشتەوە */
+        /* خۆر و ئاڵای کوردستان لە باکگراونددا */
         .kurdish-sun {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(255, 204, 0, 0.25) 0%, rgba(255, 204, 0, 0.05) 50%, transparent 70%);
+            width: 480px;
+            height: 480px;
+            background: linear-gradient(135deg, rgba(184, 45, 22, 0.15), rgba(255, 255, 255, 0.2), rgba(0, 94, 48, 0.15)), 
+                        radial-gradient(circle, rgba(255, 204, 0, 0.3) 0%, rgba(255, 204, 0, 0.08) 50%, transparent 75%);
             border-radius: 50%;
             z-index: -1;
             pointer-events: none;
+            box-shadow: 0 0 50px rgba(255, 204, 0, 0.2);
         }
 
         /* بەشی پەیامی نیشتمانی لە سەرەوە */
@@ -336,10 +385,10 @@
             font-weight: bold;
         }
 
-        @media (max-width: 600px) {
-            .creator-badge {
+        @media (max-width: 768px) {
+            .creator-badge, .hero-badge {
                 position: static;
-                margin-bottom: 15px;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -357,6 +406,7 @@
         </div>
     </div>
 
+    <!-- لۆگۆی گۆشەی ڕاستی سەرەوە (دروستکەر) -->
     <div class="creator-badge">
         دروست کراوە لە لایەن ئەلەند<br>
         <span style="font-size: 11px; opacity: 0.85;">Created by Aland</span>
@@ -366,6 +416,18 @@
         </div>
     </div>
 
+    <!-- لۆگۆی گۆشەی چەپی سەرەوە (شێخ مەحمود و لینککردنی تیکتۆک بە zuhermuhammed) -->
+    <div class="hero-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Sheikh_Mahmud_Barzanji.jpg" alt="شێخ مەحمود">
+        <div>
+            <strong>شێخ مەحمود</strong><br>
+            <span style="font-size: 12px; color: #ffcc00;">zuhermuhammed</span><br>
+            <span style="font-size: 11px; opacity: 0.9;">بەرێوبەر</span><br>
+            <a href="https://tiktok.com/@zuhermuhammed" target="_blank">TikTok</a>
+        </div>
+    </div>
+
+    <!-- خۆر و ئاڵای کوردستان لە باکگراونددا -->
     <div class="kurdish-sun"></div>
 
     <div class="patriot-banner">☀️ ئامانجی ئێمە تەنها سەرکەوتنە، بژی کورد! ☀️</div>
@@ -400,6 +462,7 @@
                 </label>
             </div>
             <button class="start-btn" onclick="startQuiz()">دەستپێکردنی تاقیکردنەوە</button>
+            <p style="margin-top: 15px; font-size: 14px; font-weight: bold; color: #007a3d;">کۆشش لەسەر ١٠٠٪</p>
         </div>
 
         <div id="quiz-play" style="display: none;">
@@ -408,7 +471,7 @@
             <div id="mcq-options" style="display: none;"></div>
             
             <div id="write-option" style="display: none;">
-                <input type="text" id="write-input" placeholder="هێما و ژمارە بنووسە (نموونە: He 2)" style="padding: 10px; width: 80%; margin-bottom: 10px;">
+                <input type="text" id="write-input" placeholder="هێما و ژمارە بنووسە (نموونە: tanya 2)" style="padding: 10px; width: 80%; margin-bottom: 10px;">
                 <br>
                 <button class="start-btn" onclick="submitWriteAnswer()">ناردنی وەڵام</button>
             </div>
@@ -438,7 +501,6 @@
             document.getElementById('name-modal').style.display = 'none';
         }
 
-        // کارپێکردن بە دایرتەی Enter لە کیبۆرددا
         document.getElementById('user-name-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 saveUserName();
@@ -447,7 +509,7 @@
 
         const elements = [
             { number: 1, symbol: "H", nameEn: "Hydrogen", name: "هایدرۆجین", weight: "1.008", category: "ناکانزاکان", class: "nonmetal" },
-            { number: 2, symbol: "He", nameEn: "Helium", name: "هیلیۆم", weight: "4.0026", category: "گازە خانەدانەکان", class: "noble-gas" },
+            { number: 2, symbol: "tanya", nameEn: "Helium", name: "هیلیۆم", weight: "4.0026", category: "گازە خانەدانەکان", class: "noble-gas" },
             { number: 3, symbol: "Li", nameEn: "Lithium", name: "لیتیۆم", weight: "6.94", category: "کانزای ئەلکالی", class: "alkali" },
             { number: 4, symbol: "Be", nameEn: "Beryllium", name: "بێریلیۆم", weight: "9.0122", category: "کانزای گڵیەی ئەلکالیەکان", class: "alkaline-earth" },
             { number: 5, symbol: "B", nameEn: "Boron", name: "بۆرۆن", weight: "10.81", category: "نیمچه کانزاکان", class: "metalloid" },
@@ -732,7 +794,7 @@
             document.getElementById('score-text').innerText = `${userName}، نمرەکەت: ${score} لە ${activeQuestions.length}`;
 
             let reviewDiv = document.getElementById('review-list');
-            reviewDiv.innerHTML = '<h4>پێداچوونەوە:</h4>';
+            reviewDiv.innerHTML = '<h4 style="margin-bottom: 5px;">پێداچوونەوە (ئەو پرسیارانەی هەڵەت کردووە):</h4>';
 
             userAnswers.forEach((ans, idx) => {
                 let color = ans.isCorrect ? '#007a3d' : '#d9381e';
