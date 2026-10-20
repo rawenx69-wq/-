@@ -2,13 +2,18 @@
 <html lang="ku">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لیستی توخمەکان و تاقیکردنەوە</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>لیستی توخمەکان و تاقیکردنەوەی کیمیا</title>
     <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 20px 20px 110px 20px;
+            padding: 20px 15px 100px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -34,42 +39,42 @@
         #name-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 10, 20, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 20, 0.9);
+            backdrop-filter: blur(15px);
             display: flex; justify-content: center; align-items: center;
             z-index: 9999;
         }
 
         .modal-content {
             background: rgba(255, 255, 255, 0.98);
-            padding: 35px 30px;
-            border-radius: 20px;
+            padding: 35px 25px;
+            border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             text-align: center;
-            width: 90%; max-width: 420px;
+            width: 90%; max-width: 380px;
             border: 2px solid #ffcc00;
         }
 
         .modal-content input {
-            width: 85%; padding: 14px 18px; font-size: 16px;
-            border-radius: 12px; border: 2px solid #ddd;
+            width: 100%; padding: 14px 18px; font-size: 16px;
+            border-radius: 14px; border: 2px solid #ddd;
             outline: none; margin-bottom: 15px; text-align: center;
             background: #f9f9f9;
         }
 
         .modal-btn {
             background: #007a3d; color: white; border: none;
-            padding: 12px 30px; border-radius: 12px; font-size: 16px;
+            padding: 14px 20px; border-radius: 14px; font-size: 16px;
             font-weight: bold; cursor: pointer; width: 100%;
             box-shadow: 0 4px 15px rgba(0, 122, 61, 0.3);
+            transition: 0.2s;
         }
-        .modal-btn:hover { background: #005e30; }
+        .modal-btn:hover { background: #005e30; transform: scale(1.02); }
 
-        /* لۆگۆکانی ناو بەشی سەرەکی */
         .home-badges-wrapper {
             display: flex;
             justify-content: space-between;
-            gap: 15px;
+            gap: 12px;
             width: 100%;
             margin-bottom: 20px;
             flex-wrap: wrap;
@@ -77,23 +82,23 @@
 
         .creator-badge, .hero-badge {
             background: rgba(15, 15, 25, 0.9);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             color: #ffcc00;
-            padding: 12px 15px;
-            border-radius: 14px;
+            padding: 12px;
+            border-radius: 16px;
             font-size: 13px;
             font-weight: bold;
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             border: 1px solid rgba(255, 204, 0, 0.5);
             flex: 1;
-            min-width: 250px;
+            min-width: 240px;
             text-align: center;
         }
         
         .hero-badge {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-align: right;
         }
         .hero-badge img {
@@ -113,31 +118,31 @@
         .home-container {
             width: 100%; max-width: 750px;
             background: linear-gradient(135deg, rgba(184, 45, 22, 0.9), rgba(255, 255, 255, 0.95), rgba(0, 94, 48, 0.9));
-            border-radius: 24px; padding: 30px 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-radius: 24px; padding: 25px 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             border: 3px solid #ffcc00; text-align: center; color: #111;
             position: relative; overflow: hidden;
         }
 
         .home-sun {
-            width: 80px; height: 80px; background: #ffcc00; border-radius: 50%;
+            width: 75px; height: 75px; background: #ffcc00; border-radius: 50%;
             margin: 0 auto 10px auto; box-shadow: 0 0 25px #ffcc00;
-            display: flex; align-items: center; justify-content: center; font-size: 35px;
+            display: flex; align-items: center; justify-content: center; font-size: 32px;
         }
 
         .welcome-banner {
-            font-size: 18px; font-weight: bold; color: #005e30; margin-bottom: 12px;
+            font-size: 17px; font-weight: bold; color: #005e30; margin-bottom: 12px;
             background: rgba(255,255,255,0.85); padding: 6px 12px; border-radius: 10px; display: inline-block;
         }
 
         .home-text-box {
-            background: rgba(15, 15, 25, 0.85); color: #fff; padding: 20px;
+            background: rgba(15, 15, 25, 0.85); color: #fff; padding: 18px;
             border-radius: 16px; margin-top: 15px; text-align: right; border: 1px solid rgba(255,204,0,0.4);
             line-height: 1.8; font-size: 14px;
         }
 
         .feedback-box-home {
             margin-top: 15px; background: rgba(255, 255, 255, 0.92); padding: 12px;
-            border-radius: 12px; color: #000; font-size: 13px; font-weight: bold;
+            border-radius: 14px; color: #000; font-size: 13px; font-weight: bold;
         }
         .feedback-box-home a {
             color: #b82d16; text-decoration: none; background: rgba(184, 45, 22, 0.1);
@@ -147,15 +152,16 @@
 
         .kurdish-sun {
             position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); width: 480px; height: 480px;
+            transform: translate(-50%, -50%); width: 450px; height: 450px;
             background: radial-gradient(circle, rgba(255, 204, 0, 0.25) 0%, transparent 75%);
             border-radius: 50%; z-index: -1; pointer-events: none;
         }
 
         h1, h2 {
             color: #111; background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(8px); padding: 12px 25px;
-            border-radius: 12px; margin-top: 10px; margin-bottom: 20px; text-align: center;
+            backdrop-filter: blur(8px); padding: 12px 20px;
+            border-radius: 14px; margin-top: 10px; margin-bottom: 20px; text-align: center;
+            font-size: 20px;
         }
 
         .filter-buttons {
@@ -178,7 +184,7 @@
 
         #details {
             background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(10px);
-            padding: 25px; border-radius: 16px; width: 100%; max-width: 550px;
+            padding: 20px; border-radius: 16px; width: 100%; max-width: 550px;
             text-align: right; color: #000000; margin-bottom: 25px; display: none;
             border: 2px solid #007a3d; line-height: 1.8;
         }
@@ -205,70 +211,128 @@
         .nonmetal { background-color: #2D6A68 !important; color: #fff; }
 
         #elements-list {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 12px; width: 100%; max-width: 900px; margin-bottom: 30px; direction: ltr;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+            gap: 10px; width: 100%; max-width: 900px; margin-bottom: 30px; direction: ltr;
         }
         .element-card {
-            padding: 12px 8px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            padding: 12px 6px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             cursor: pointer; display: flex; flex-direction: column; align-items: center;
             justify-content: center; text-align: center; backdrop-filter: blur(5px);
+            transition: 0.2s;
         }
-        .element-card:hover { transform: scale(1.08); }
-        .el-num { font-size: 12px; font-weight: bold; align-self: flex-start; margin-left: 4px; }
-        .el-symbol { font-size: 22px; font-weight: bold; margin: 2px 0; }
-        .el-name-ku { font-size: 13px; font-weight: bold; }
-        .el-name-en { font-size: 11px; opacity: 0.85; }
+        .element-card:hover { transform: scale(1.05); }
+        .el-num { font-size: 11px; font-weight: bold; align-self: flex-start; margin-left: 4px; }
+        .el-symbol { font-size: 20px; font-weight: bold; margin: 2px 0; }
+        .el-name-ku { font-size: 12px; font-weight: bold; }
+        .el-name-en { font-size: 10px; opacity: 0.85; }
 
         .section-box {
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            padding: 25px; border-radius: 16px; width: 100%; max-width: 850px;
+            padding: 20px; border-radius: 18px; width: 100%; max-width: 850px;
             text-align: right; margin-bottom: 25px; border: 2px solid #007a3d; color: #000;
             overflow-x: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
         .prefix-table, .si-table {
-            width: 100%; border-collapse: collapse; text-align: right; font-size: 15px; margin-top: 15px;
+            width: 100%; border-collapse: collapse; text-align: right; font-size: 14px; margin-top: 15px;
         }
         .prefix-table th, .prefix-table td, .si-table th, .si-table td {
-            padding: 10px 12px; border-bottom: 1px solid #ddd;
+            padding: 10px; border-bottom: 1px solid #ddd;
         }
         .prefix-table th, .si-table th { background: #007a3d; color: white; }
         .si-table th.derived-header { background: #b82d16; }
 
+        /* بەشی تاقیکردنەوەی مۆدێرن وەک ئەپی ڕاستەقینە */
         .quiz-section {
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            padding: 25px; border-radius: 16px; width: 100%; max-width: 600px;
+            background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(20px);
+            padding: 25px 20px; border-radius: 22px; width: 100%; max-width: 550px;
             text-align: center; color: #000; border: 2px solid #007a3d;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            margin: 0 auto;
         }
-        .quiz-inputs { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
-        .quiz-inputs input, .quiz-inputs select { padding: 10px 14px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px; width: 100%; max-width: 320px; }
-        .option-btn {
-            background: #f8f9fa; border: 2px solid #ddd; padding: 12px;
-            border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer;
-            margin: 6px 0; width: 100%;
-        }
-        .option-btn:hover { background: #eef2f5; border-color: #007a3d; }
 
-        /* باری خوارەوەی مۆدێرن (وەک ئەپێکی ڕاستەقینە)[span_2](start_span)[span_2](end_span) */
+        .app-dropdown-container {
+            margin-bottom: 15px;
+            text-align: right;
+            width: 100%;
+        }
+        .app-dropdown-label {
+            font-size: 14px; font-weight: bold; margin-bottom: 6px; display: block; color: #222;
+        }
+        .app-select-box {
+            position: relative;
+            width: 100%;
+            background: #f4f6f8;
+            border: 2px solid #007a3d;
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #007a3d;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .app-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 105%; left: 0; width: 100%;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 2px solid #007a3d;
+            z-index: 100;
+            overflow: hidden;
+            text-align: right;
+        }
+        .app-dropdown-item {
+            padding: 14px 16px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .app-dropdown-item:hover, .app-dropdown-item.selected {
+            background: #007a3d;
+            color: #fff;
+        }
+
+        .quiz-inputs { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
+        .quiz-inputs input { padding: 12px; border-radius: 10px; border: 2px solid #ccc; font-size: 15px; width: 100%; max-width: 300px; text-align: center; outline: none; background: #fff; }
+        
+        .option-btn {
+            background: #f8f9fa; border: 2px solid #ddd; padding: 14px;
+            border-radius: 14px; font-size: 16px; font-weight: bold; cursor: pointer;
+            margin: 8px 0; width: 100%; transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .option-btn:hover { background: #eef2f5; border-color: #007a3d; transform: scale(1.01); }
+
+        /* باری خوارەوەی ڕەق و جێگیر وەک ئەپی ئایفۆن و ئەندرۆید */
         .bottom-nav {
-            position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
-            background: rgba(15, 15, 25, 0.92); backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 204, 0, 0.6); padding: 8px 12px;
-            border-radius: 24px; display: flex; gap: 8px; z-index: 1000;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.6);
-            width: 92%; max-width: 500px; justify-content: space-around;
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(15, 15, 25, 0.96); backdrop-filter: blur(25px);
+            border-top: 2px solid rgba(255, 204, 0, 0.5); padding: 8px 0;
+            display: flex; justify-content: center; gap: 10px; z-index: 9999;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
         }
         .nav-item {
-            background: transparent; border: none; color: rgba(255, 255, 255, 0.75);
+            background: transparent; border: none; color: rgba(255, 255, 255, 0.7);
             padding: 8px 12px; border-radius: 16px; cursor: pointer;
-            font-size: 13px; font-weight: bold; transition: all 0.3s ease;
-            display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1;
+            font-size: 11px; font-weight: bold; transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            min-width: 70px;
         }
-        .nav-item span { font-size: 16px; }
+        .nav-item span { font-size: 20px; }
         .nav-item:hover { color: #ffcc00; background: rgba(255, 255, 255, 0.08); }
         .nav-item.active {
             background: #007a3d; color: #ffffff;
-            box-shadow: 0 4px 15px rgba(0, 122, 61, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 122, 61, 0.4);
             transform: translateY(-3px);
         }
     </style>
@@ -291,7 +355,6 @@
     <!-- 1. بەشی سەرەکی -->
     <div id="tab-home" class="tab-content active">
         <div class="home-container">
-            <!-- لۆگۆکانی دروستکەر و بەڕێوەبەر لێرەدا دانراون تا تەنها لە سەرەکییەوە دەربکەون[span_3](start_span)[span_3](end_span) -->
             <div class="home-badges-wrapper">
                 <div class="creator-badge">
                     دروست کراوە لە لایەن ئەلەند
@@ -312,7 +375,7 @@
 
             <div class="home-sun">☀️</div>
             <div id="welcome" class="welcome-banner">بەخێربێیت!</div>
-            <h1 style="color: #fff; background: rgba(0,0,0,0.4); font-size: 20px; padding: 10px; border-radius: 10px; margin-top: 0;">ئامانجی ئێمە ئەوەیە باشترین و جوانترین زانیاری پێشکەش بە قوتابیان بکەین!</h1>
+            <h1 style="color: #fff; background: rgba(0,0,0,0.4); font-size: 19px; padding: 10px; border-radius: 12px; margin-top: 0;">ئامانجی ئێمە ئەوەیە باشترین و جوانترین زانیاری پێشکەش بە قوتابیان بکەین!</h1>
             
             <div class="home-text-box">
                 <p style="margin-top: 0; font-weight: bold; color: #ffcc00;">💡 دەربارەی ئەم بەرنامەیە:</p>
@@ -426,59 +489,66 @@
         <div class="quiz-section">
             <h2>بەشی تاقیکردنەوە</h2>
             <div id="quiz-setup">
-                <div class="quiz-inputs">
-                    <label>بابەتی تاقیکردنەوە: 
-                        <select id="quiz-category" onchange="toggleCategoryOptions()">
-                            <option value="elements">🧪 خشتەی خولی توخمەکان</option>
-                            <option value="base-units">📏 ١. یەکە بنچینەییەکانی SI</option>
-                            <option value="prefix-units">📊 ٢. پێشگرەکانی یەکەی SI</option>
-                            <option value="derived-units">📘 ٣. یەکە وەرگیراوەکانی SI</option>
-                        </select>
-                    </label>
+                <!-- سیستەمی مێنۆی مۆدێرنی وەک ئەپ -->
+                <div class="app-dropdown-container">
+                    <span class="app-dropdown-label">بابەتی تاقیکردنەوە:</span>
+                    <div class="app-select-box" onclick="toggleDropdown('cat-menu')">
+                        <span id="selected-cat-text">🧪 خشتەی خولی توخمەکان</span>
+                        <span>▼</span>
+                        <div id="cat-menu" class="app-dropdown-menu">
+                            <div class="app-dropdown-item selected" onclick="selectQuizCategory('elements', '🧪 خشتەی خولی توخمەکان')">🧪 خشتەی خولی توخمەکان</div>
+                            <div class="app-dropdown-item" onclick="selectQuizCategory('base-units', '📏 ١. یەکە بنچینەییەکانی SI')">📏 ١. یەکە بنچینەییەکانی SI</div>
+                            <div class="app-dropdown-item" onclick="selectQuizCategory('prefix-units', '📊 ٢. پێشگرەکانی یەکەی SI')">📊 ٢. پێشگرەکانی یەکەی SI</div>
+                            <div class="app-dropdown-item" onclick="selectQuizCategory('derived-units', '📘 ٣. یەکە وەرگیراوەکانی SI')">📘 ٣. یەکە وەرگیراوەکانی SI</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="quiz-category" value="elements">
                 </div>
 
-                <div class="quiz-inputs">
-                    <label>شێوازی وەڵامدانەوە: 
-                        <select id="quiz-mode">
-                            <option value="mcq">☑️ هەڵبژاردن (چەند بژاردەیەک)</option>
-                            <option value="input">✍️ نووسین (ڕاستەوخۆ نووسینی وەڵام)</option>
-                        </select>
-                    </label>
+                <div class="app-dropdown-container">
+                    <span class="app-dropdown-label">شێوازی وەڵامدانەوە:</span>
+                    <div class="app-select-box" onclick="toggleDropdown('mode-menu')">
+                        <span id="selected-mode-text">☑️ هەڵبژاردن (چەند بژاردەیەک)</span>
+                        <span>▼</span>
+                        <div id="mode-menu" class="app-dropdown-menu">
+                            <div class="app-dropdown-item selected" onclick="selectQuizMode('mcq', '☑️ هەڵبژاردن (چەند بژاردەیەک)')">☑️ هەڵبژاردن (چەند بژاردەیەک)</div>
+                            <div class="app-dropdown-item" onclick="selectQuizMode('input', '✍️ نووسین (ڕاستەوخۆ نووسینی وەڵام)')">✍️ نووسین (ڕاستەوخۆ نووسینی وەڵام)</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="quiz-mode" value="mcq">
                 </div>
 
                 <div id="element-range-inputs" class="quiz-inputs">
-                    <label>لە ژمارە: <input type="number" id="from-num" value="1" min="1" max="118" style="width: 70px;"></label>
-                    <label>تا ژمارە: <input type="number" id="to-num" value="20" min="1" max="118" style="width: 70px;"></label>
+                    <label style="font-size: 13px; font-weight: bold; width:100%; text-align:right;">טוێژی ژمارەی توخمەکان:</label>
+                    <label>لە ژمارە: <input type="number" id="from-num" value="1" min="1" max="118"></label>
+                    <label>تا ژمارە: <input type="number" id="to-num" value="20" min="1" max="118"></label>
                 </div>
 
-                <button class="modal-btn" onclick="startQuiz()">دەستپێکردنی تاقیکردنەوە</button>
+                <button class="modal-btn" style="margin-top: 10px;" onclick="startQuiz()">دەستپێکردنی تاقیکردنەوە</button>
             </div>
 
             <div id="quiz-play" style="display: none;">
-                <div id="question-text" style="font-size: 18px; font-weight: bold; margin-bottom: 15px;"></div>
+                <div id="question-text" style="font-size: 17px; font-weight: bold; margin-bottom: 15px; color: #007a3d;"></div>
                 
-                <!-- بۆ شێوازی هەڵبژاردن -->
                 <div id="mcq-options"></div>
 
-                <!-- بۆ شێوازی نووسین -->
                 <div id="input-answer-box" style="display: none; margin-top: 15px;">
-                    <input type="text" id="user-text-answer" placeholder="وەڵامەکەت لێرە بنووسە..." style="width: 80%; padding: 12px; font-size: 16px; border-radius: 8px; border: 2px solid #ccc; text-align: center; outline: none;">
-                    <br><br>
-                    <button class="modal-btn" onclick="checkTextAnswer()">پشکنتنی وەڵام</button>
+                    <input type="text" id="user-text-answer" placeholder="وەڵامەکەت لێرە بنووسە..." style="width: 100%; padding: 14px; font-size: 16px; border-radius: 12px; border: 2px solid #ccc; text-align: center; outline: none; margin-bottom: 12px;">
+                    <button class="modal-btn" onclick="checkTextAnswer()">پشکنینی وەڵام</button>
                 </div>
             </div>
 
             <div id="quiz-results" style="display: none; text-align: right;">
                 <h3>ئەنجامەکان:</h3>
-                <p id="score-text" style="font-size: 18px; font-weight: bold;"></p>
-                <div id="review-list" style="max-height: 250px; overflow-y: auto;"></div>
+                <p id="score-text" style="font-size: 18px; font-weight: bold; color: #007a3d;"></p>
+                <div id="review-list" style="max-height: 220px; overflow-y: auto;"></div>
                 <br>
                 <button class="modal-btn" onclick="resetQuiz()">تاقیکردنەوەیەکی تر</button>
             </div>
         </div>
     </div>
 
-    <!-- باری خوارەوەی مۆدێرن (وەک ئەپێکی ڕاستەقینە)[span_4](start_span)[span_4](end_span) -->
+    <!-- باری خوارەوەی جێگیر (Fixed Modern App Bottom Navigation) -->
     <div class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('tab-home', this)">
             <span>🏠</span>سەرەکی
@@ -515,6 +585,41 @@
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // کۆنتڕۆڵی مێنۆکانی وەک ئەپ
+        function toggleDropdown(menuId) {
+            let menu = document.getElementById(menuId);
+            document.querySelectorAll('.app-dropdown-menu').forEach(m => {
+                if(m !== menu) m.style.display = 'none';
+            });
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function selectQuizCategory(val, text) {
+            document.getElementById('quiz-category').value = val;
+            document.getElementById('selected-cat-text').innerText = text;
+            document.getElementById('cat-menu').style.display = 'none';
+            
+            let rangeBox = document.getElementById('element-range-inputs');
+            if (val === 'elements') {
+                rangeBox.style.display = 'flex';
+            } else {
+                rangeBox.style.display = 'none';
+            }
+        }
+
+        function selectQuizMode(val, text) {
+            document.getElementById('quiz-mode').value = val;
+            document.getElementById('selected-mode-text').innerText = text;
+            document.getElementById('mode-menu').style.display = 'none';
+        }
+
+        // داخستنی مێنۆکان کاتێک لە دەرەوەی کلیک دەکرێت
+        window.onclick = function(event) {
+            if (!event.target.closest('.app-select-box')) {
+                document.querySelectorAll('.app-dropdown-menu').forEach(m => m.style.display = 'none');
+            }
         }
 
         const elements = [
@@ -749,21 +854,10 @@
         let currentIndex = 0;
         let score = 0;
         let userAnswers = [];
-        let currentMode = 'mcq';
-
-        function toggleCategoryOptions() {
-            let cat = document.getElementById('quiz-category').value;
-            let rangeBox = document.getElementById('element-range-inputs');
-            if (cat === 'elements') {
-                rangeBox.style.display = 'flex';
-            } else {
-                rangeBox.style.display = 'none';
-            }
-        }
 
         function startQuiz() {
             let cat = document.getElementById('quiz-category').value;
-            currentMode = document.getElementById('quiz-mode').value;
+            let currentMode = document.getElementById('quiz-mode').value;
             
             currentIndex = 0;
             score = 0;
@@ -801,6 +895,8 @@
             }
 
             let qObj = activeQuestions[currentIndex];
+            let currentMode = document.getElementById('quiz-mode').value;
+
             document.getElementById('question-text').innerText = 
                 `پرسیاری ${currentIndex + 1} لە ${activeQuestions.length}: ${qObj.q}`;
 
