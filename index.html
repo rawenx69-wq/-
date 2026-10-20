@@ -75,11 +75,17 @@
             background: #f9f9f9; font-weight: bold;
         }
 
+        @keyframes glowing-btn {
+            0% { box-shadow: 0 0 5px #007a3d, 0 0 10px #ffcc00, 0 0 15px #007a3d; }
+            50% { box-shadow: 0 0 20px #ffcc00, 0 0 30px #005e30, 0 0 40px #ffcc00; }
+            100% { box-shadow: 0 0 5px #007a3d, 0 0 10px #ffcc00, 0 0 15px #007a3d; }
+        }
+
         .modal-btn {
             background: #007a3d; color: white; border: none;
             padding: 14px 20px; border-radius: 14px; font-size: 16px;
             font-weight: bold; cursor: pointer; width: 100%;
-            box-shadow: 0 6px 20px rgba(0, 122, 61, 0.35);
+            animation: glowing-btn 2.5s infinite;
             transition: 0.2s ease;
         }
         .modal-btn:hover { background: #005e30; transform: scale(1.02); }
@@ -265,7 +271,6 @@
         .prefix-table th, .si-table th { background: #007a3d; color: white; font-weight: 800; }
         .si-table th.derived-header { background: #b82d16; }
 
-        /* بەشی تاقیکردنەوەی مۆدێرنی نایاب */
         .quiz-section {
             background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px);
             padding: 28px 22px; border-radius: 24px; width: 100%; max-width: 580px;
@@ -337,7 +342,6 @@
         }
         .option-btn:hover { background: #eef2f5; border-color: #007a3d; transform: scale(1.01); }
 
-        /* باری خوارەوەی ڕەق و جێگیر وەک ئەپی ئایفۆن و ئەندرۆید */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: rgba(15, 15, 25, 0.97); backdrop-filter: blur(25px);
@@ -363,14 +367,15 @@
 </head>
 <body>
 
-    <!-- پەنجەرەی ناونووسین -->
+    <!-- پەنجەرەی ناونووسین و تەمەن -->
     <div id="name-modal">
         <div class="modal-content">
-            <h3>✨ بەخێربێیت بۆ ئەپی فێربوون! ✨</h3>
-            <p>تکایە ناوی خۆت بنووسە بۆ دەستپێکردن:</p>
-            <input type="text" id="user-name-input" placeholder="ناوی خۆت لێرە بنووسە..." autofocus>
-            <div id="modal-error" style="color: #d9381e; font-size: 13px; font-weight: bold; margin-bottom: 15px; display: none;">⚠️ تکایە سەرەتا ناوی خۆت بنووسە!</div>
-            <button class="modal-btn" onclick="saveUserName()">🚀 چوونە ژوورەوە</button>
+            <h3>✨ بەخێرهاتی بۆ ناوەندی کیمیا ✨</h3>
+            <p>تکایە ناو و تەمەنی خۆت بنووسە:</p>
+            <input type="text" id="user-name-input" placeholder="ناوی خۆت لێرە بنووسە..." style="margin-bottom: 10px;">
+            <input type="number" id="user-age-input" placeholder="تەمەنی خۆت بنووسە..." min="1" max="120">
+            <div id="modal-error" style="color: #d9381e; font-size: 13px; font-weight: bold; margin-bottom: 15px; display: none;">⚠️ تکایە ناو و تەمەنت بە تەواوی بنووسە!</div>
+            <button class="modal-btn" onclick="saveUserData()">🚀 برۆ ژوورەوە</button>
         </div>
     </div>
 
@@ -571,7 +576,7 @@
         </div>
     </div>
 
-    <!-- باری خوارەوەی جێگیر (Fixed Modern App Bottom Navigation) -->
+    <!-- باری خوارەوەی جێگیر -->
     <div class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('tab-home', this)">
             <span>🏠</span>سەرەکی
@@ -589,15 +594,19 @@
 
     <script>
         let userName = "";
+        let userAge = "";
 
-        function saveUserName() {
-            let inputVal = document.getElementById('user-name-input').value.trim();
-            if (inputVal === "") {
+        function saveUserData() {
+            let nameVal = document.getElementById('user-name-input').value.trim();
+            let ageVal = document.getElementById('user-age-input').value.trim();
+            
+            if (nameVal === "" || ageVal === "") {
                 document.getElementById('modal-error').style.display = 'block';
                 return;
             }
-            userName = inputVal;
-            document.getElementById('welcome').innerText = `✨ سڵاو، ${userName}!`;
+            userName = nameVal;
+            userAge = ageVal;
+            document.getElementById('welcome').innerText = `✨ بەخێربێی، ${userName} (تەمەن: ${userAge} ساڵ)!`;
             document.getElementById('name-modal').style.display = 'none';
         }
 
