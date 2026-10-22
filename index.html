@@ -473,7 +473,7 @@
         </div>
     </div>
 
-    <!-- 2. بەشی تاقیگەی کارلێکی کیمیایی (بە ڕەنگی تاریک و شاز) -->
+    <!-- 2. بەشی تاقیگەی کارلێکی کیمیایی -->
     <div id="tab-lab" class="tab-content">
         <div class="lab-container" style="background: #090912; border: 1px solid rgba(129, 140, 248, 0.25);">
             <h2 style="background: rgba(15, 15, 30, 0.8); border-color: rgba(129, 140, 248, 0.3); color: #818cf8;">🧪 تاقیگەی تاریك و پێشکەوتووی کارلێکی کیمیایی</h2>
@@ -524,11 +524,10 @@
         </div>
     </div>
 
-    <!-- 3. بەشی خشتەی خولی (١١٨ توخم) کە دوگمەی خێرای تاقیگەی لە سەرەوە تیادایە -->
+    <!-- 3. بەشی خشتەی خولی -->
     <div id="tab-table" class="tab-content">
         <h1>لیستی ١١٨ توخمی خشتەی خولی</h1>
         
-        <!-- دوگمەی خێرا بۆ چوونە ناو بەشی تاقیگە لە ناو خشتەدا -->
         <div style="width: 100%; max-width: 850px; margin-bottom: 15px; text-align: center;">
             <button onclick="switchTab('tab-lab', document.querySelectorAll('.nav-item')[1])" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border: none; padding: 12px 24px; border-radius: 14px; font-weight: bold; font-size: 14px; cursor: pointer; box-shadow: 0 5px 20px rgba(99,102,241,0.4); width: 100%;">
                 🧪 کردنەوەی تاقیگەی کیمیایی (تایبەت بە تێکەڵکردنی ماددەکان)
@@ -740,10 +739,10 @@
         <div class="settings-container">
             <h2>⚙️ ڕێکخستنەکانی ئەپ (Settings)</h2>
 
-            <!-- بەشی مۆسیقا پلەیەر -->
+            <!-- بەشی مۆسیقا پلەیەر کە فایلەکانی خۆت دەخوێنێتەوە -->
             <div class="music-box">
                 <span style="font-size: 14.5px; font-weight: 700; color: #818cf8;">🎵 مۆسیقا و گۆرانی پاشبنەما:</span>
-                <p style="font-size: 12px; opacity: 0.8; margin: 4px 0 10px 0;">گۆرانییەک هەڵبژێرە بۆ لێدان ڕاستەوخۆ لەناو ئەپەکەدا:</p>
+                <p style="font-size: 12px; opacity: 0.8; margin: 4px 0 10px 0;">گۆرانییە دڵخوازەکەی خۆت هەڵبژێرە:</p>
                 
                 <div class="music-btn-group">
                     <button class="music-btn" id="mbtn-1" onclick="playTrack(1)">🎤 گۆرانی یەکەم</button>
@@ -798,7 +797,7 @@
         </div>
     </div>
 
-    <!-- پاوەری خوارەوەی مۆدێرن -->
+    <!-- پاوەری خوارەوە -->
     <div id="main-bottom-nav" class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('tab-home', this)">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -832,10 +831,11 @@
         let favorites = JSON.parse(localStorage.getItem('chem_favs') || '[]');
         let currentTrackId = null;
 
+        /* لینکەکان ڕاستەوخۆ دەبەسترێنەوە بە فایلی گۆرانییەکانی خۆت لە گیتهەب */
         const songsList = {
-            1: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-            2: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-            3: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+            1: "song1.mp3",
+            2: "song2.mp3",
+            3: "song3.mp3"
         };
 
         function playTrack(trackId) {
@@ -852,7 +852,7 @@
                     currentTrackId = trackId;
                     document.getElementById(`mbtn-${trackId}`).classList.add('playing');
                 }).catch(e => {
-                    alert("تکایە دڵنیابە لە پەیوەندی هێڵی ئینتەرنێتەکەت!");
+                    alert("فایلی گۆرانیەکە نەنۆزرایەوە! تکایە دڵنیابە لە گیتهەبەکەدا فایلی song1.mp3 و song2.mp3 هەبێت.");
                 });
             }
         }
@@ -1560,155 +1560,6 @@
             clearInterval(stopwatchTimer);
             document.getElementById('quiz-setup').style.display = 'block';
             document.getElementById('quiz-results').style.display = 'none';
-        }
-    </script>
-</body><!DOCTYPE html>
-<html lang="ku" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تاقیکردنەوەی کیمیا</title>
-    <style>
-        :root {
-            --bg-gradient: radial-gradient(circle, #1a1a2e 0%, #16213e 100%);
-            --text-color: #ffffff;
-            --card-bg: rgba(20, 20, 45, 0.55);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --input-bg: rgba(255, 255, 255, 0.04);
-            --input-br: rgba(18, 18, 42, 0.96);
-            --base-font-size: 14px;
-        }
-
-        [data-theme="light"] {
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --text-color: #0f172a;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --card-border: rgba(0, 0, 0, 0.12);
-            --input-bg: rgba(0, 0, 0, 0.04);
-            --input-br: rgba(226, 232, 240, 0.9);
-            --base-font-size: 14px;
-        }
-
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            direction: rtl;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 500px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 24px;
-            box-sizing: border-box;
-            text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(8px);
-        }
-
-        h1 {
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        button {
-            padding: 14px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 12px;
-            background: #007aff;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        button:active {
-            transform: scale(0.98);
-            opacity: 0.9;
-        }
-
-        .audio-btn {
-            background: #34c759;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <h1>پاوانی کەسایەتی - تاقیکردنەوەی کیمیا</h1>
-        <p>دەنگەکان لێبدە بۆ گوێگرتن لە گۆرانییەکان:</p>
-        
-        <div class="btn-group">
-            <button class="audio-btn" onclick="playSound('click'); playAudio('Song1.mp3')">🎵 گۆرانی یەکەم (Song 1)</button>
-            <button class="audio-btn" onclick="playSound('click'); playAudio('Song2.mp3')">🎵 گۆرانی دووەم (Song 2)</button>
-            <button class="audio-btn" onclick="playSound('click'); playAudio('Song3.mp3')">🎵 گۆرانی سێیەم (Song 3)</button>
-        </div>
-    </div>
-
-    <!-- فایلی دەنگی شاراوە -->
-    <audio id="audioPlayer"></audio>
-
-    <script>
-        let currentAudio = document.getElementById('audioPlayer');
-
-        function playSound(type) {
-            if (e && e.stopPropagation) e.stopPropagation();
-        }
-
-        function playAudio(filename) {
-            currentAudio.src = filename;
-            currentAudio.play().catch(error => {
-                console.log("خەتای لێدانی دەنگ:", error);
-            });
-        }
-
-        function selectQuizMode(e) {
-            if (e && e.stopPropagation) e.stopPropagation();
-            playSound('click');
-        }
-
-        function selectQuizCategory(e) {
-            if (e && e.stopPropagation) e.stopPropagation();
-            playSound('click');
-        }
-
-        function endQuiz() {
-            clearInterval(quizTimer);
-            clearInterval(stopwatchTimer);
-            let quizPlay = document.getElementById('quiz-play');
-            let quizResult = document.getElementById('quiz-result');
-            let scoreText = document.getElementById('score-text');
-            
-            if (quizPlay) quizPlay.style.display = 'none';
-            if (quizResult) quizResult.style.display = 'block';
-        }
-
-        function resetQuiz() {
-            playSound('click');
-            clearInterval(quizTimer);
-            clearInterval(stopwatchTimer);
-            let quizSetup = document.getElementById('quiz-setup');
-            let quizResult = document.getElementById('quiz-result');
-            
-            if (quizSetup) quizSetup.style.display = 'block';
-            if (quizResult) quizResult.style.display = 'none';
         }
     </script>
 </body>
