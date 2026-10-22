@@ -1562,5 +1562,154 @@
             document.getElementById('quiz-results').style.display = 'none';
         }
     </script>
+</body><!DOCTYPE html>
+<html lang="ku" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تاقیکردنەوەی کیمیا</title>
+    <style>
+        :root {
+            --bg-gradient: radial-gradient(circle, #1a1a2e 0%, #16213e 100%);
+            --text-color: #ffffff;
+            --card-bg: rgba(20, 20, 45, 0.55);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --input-bg: rgba(255, 255, 255, 0.04);
+            --input-br: rgba(18, 18, 42, 0.96);
+            --base-font-size: 14px;
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --text-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(0, 0, 0, 0.12);
+            --input-bg: rgba(0, 0, 0, 0.04);
+            --input-br: rgba(226, 232, 240, 0.9);
+            --base-font-size: 14px;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: #007aff;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        .audio-btn {
+            background: #34c759;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>پاوانی کەسایەتی - تاقیکردنەوەی کیمیا</h1>
+        <p>دەنگەکان لێبدە بۆ گوێگرتن لە گۆرانییەکان:</p>
+        
+        <div class="btn-group">
+            <button class="audio-btn" onclick="playSound('click'); playAudio('Song1.mp3')">🎵 گۆرانی یەکەم (Song 1)</button>
+            <button class="audio-btn" onclick="playSound('click'); playAudio('Song2.mp3')">🎵 گۆرانی دووەم (Song 2)</button>
+            <button class="audio-btn" onclick="playSound('click'); playAudio('Song3.mp3')">🎵 گۆرانی سێیەم (Song 3)</button>
+        </div>
+    </div>
+
+    <!-- فایلی دەنگی شاراوە -->
+    <audio id="audioPlayer"></audio>
+
+    <script>
+        let currentAudio = document.getElementById('audioPlayer');
+
+        function playSound(type) {
+            if (e && e.stopPropagation) e.stopPropagation();
+        }
+
+        function playAudio(filename) {
+            currentAudio.src = filename;
+            currentAudio.play().catch(error => {
+                console.log("خەتای لێدانی دەنگ:", error);
+            });
+        }
+
+        function selectQuizMode(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            playSound('click');
+        }
+
+        function selectQuizCategory(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            playSound('click');
+        }
+
+        function endQuiz() {
+            clearInterval(quizTimer);
+            clearInterval(stopwatchTimer);
+            let quizPlay = document.getElementById('quiz-play');
+            let quizResult = document.getElementById('quiz-result');
+            let scoreText = document.getElementById('score-text');
+            
+            if (quizPlay) quizPlay.style.display = 'none';
+            if (quizResult) quizResult.style.display = 'block';
+        }
+
+        function resetQuiz() {
+            playSound('click');
+            clearInterval(quizTimer);
+            clearInterval(stopwatchTimer);
+            let quizSetup = document.getElementById('quiz-setup');
+            let quizResult = document.getElementById('quiz-result');
+            
+            if (quizSetup) quizSetup.style.display = 'block';
+            if (quizResult) quizResult.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
