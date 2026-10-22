@@ -769,7 +769,7 @@
 
             <div class="settings-card">
                 <span>📌 وەشانی ئەپ:</span>
-                <strong style="color: #818cf8;">v20.0 Fast URL Audio Edition</strong>
+                <strong style="color: #818cf8;">v21.0 Local Audio Edition</strong>
             </div>
 
             <div class="settings-card">
@@ -813,11 +813,11 @@
         let favorites = JSON.parse(localStorage.getItem('chem_favs') || '[]');
         let currentTrackId = null;
 
-        // لێرەدا دەتوانیت لینکی فەرمی و ڕاستەوخۆی دەنگییەکانی خۆت دابنێیت (بۆ نموونە لەسەر سێرڤەرێکی خۆڕایی یان فایلی دەرەکی)
+        // ناوە ڕاستەقینەکانی فایلی دەنگییەکەی خۆت کە لە هەمان فۆڵدەردا دەبن
         const songsList = {
-            1: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-            2: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-            3: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+            1: "Hasan Zirak - Har Tom Dawe To - with Lyrics - HD حەسەن زیرەک - هەر تۆم دەوێ تۆ.mp3",
+            2: "Zakaria Abdulla - Bochi Hati (Original Audio) زەکەریا - بۆچی هاتی.mp3",
+            3: "‎⁨حەسەن زیرەک . باوانەکەی بابم hasan zirak #hasanzirak #حەسەن_زیرەک #گۆرانی #گۆرانی_رۆژهەلات #گۆران⁩.mp3"
         };
 
         function playTrack(trackId) {
@@ -835,7 +835,7 @@
                     currentTrackId = trackId;
                     document.getElementById(`mbtn-${trackId}`).classList.add('playing');
                 }).catch(e => {
-                    alert("تکایە دڵنیابە لە پەیوەندی هێڵی ئینتەرنێت یان دروستی لینکەکان!");
+                    alert("تکایە دڵنیابە کە فایلی MP3 لە هەمان فۆڵدەردایە و ناوی فایلەکە هاوشێوەیە!");
                 });
             }
         }
