@@ -107,22 +107,30 @@
             border: 1px solid rgba(129, 140, 248, 0.2);
             padding: 12px; border-radius: 14px;
             font-size: 12.5px; color: var(--text-color); line-height: 1.6;
-            margin-bottom: 18px; text-align: right; opacity: 0.9;
+            margin-bottom: 18px; text-align: right; opacity: 0.95;
         }
 
         .modal-content input {
             width: 100%; padding: 14px 18px; font-size: 14px;
             border-radius: 14px; border: 1px solid var(--card-border);
-            outline: none; margin-bottom: 16px; text-align: center;
+            outline: none; margin-bottom: 12px; text-align: center;
             background: var(--input-bg); color: var(--text-color); font-weight: bold;
         }
 
         .modal-btn {
             background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             color: white; border: 1px solid rgba(255,255,255,0.2);
-            padding: 14px 20px; border-radius: 14px; font-size: 15px;
+            padding: 13px 20px; border-radius: 14px; font-size: 14.5px;
             font-weight: bold; cursor: pointer; width: 100%;
             box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+            margin-bottom: 10px;
+        }
+
+        .secondary-modal-btn {
+            background: rgba(129, 140, 248, 0.15);
+            color: #818cf8; border: 1px solid rgba(129, 140, 248, 0.4);
+            padding: 12px 20px; border-radius: 14px; font-size: 14px;
+            font-weight: bold; cursor: pointer; width: 100%;
         }
 
         .home-container, .settings-container, .lab-container {
@@ -172,7 +180,7 @@
         .home-text-box {
             background: var(--input-bg); padding: 22px;
             border-radius: 16px; margin-top: 15px; text-align: right; border: 1px solid var(--card-border);
-            line-height: 1.8; font-size: 14px; opacity: 0.95;
+            line-height: 1.9; font-size: 14px; opacity: 0.95;
         }
 
         .feedback-box-home {
@@ -397,15 +405,18 @@
 </head>
 <body>
 
+    <!-- پەنجەرەی ناونووسین و دەستپێک -->
     <div id="name-modal">
         <div class="modal-content">
             <h3>بەخێربێی بۆ ناوەندی کیمیا</h3>
             <div class="modal-app-info">
-                ✨ ئەم پلاتفۆرمە زانستییە تایبەتە بە فێربوونی خشتەی خولی توخمەکان، تاقیگەی کارلێکی کیمیایی، یاسا و پێشگرەکان.
+                🌟 ئەم پلاتفۆرمە پێشکەوتووە بە ماندووبوونێکی زۆر، دڵسۆزی و شەونخوونییەکی بەردەوام دروستکراوە تاوەکو بێت و باشترین و ئاسانترین ئەزموونی فێربوونی کیمیا پێشکەش بە قوتابیان و ئارەزوومەندان بکات.
             </div>
             <input type="text" id="user-name-input" placeholder="ناوی خۆت لێرە بنووسە...">
-            <div id="modal-error" style="color: #f43f5e; font-size: 12px; font-weight: 600; margin-bottom: 12px; display: none;">تکایە ناوت بنووسە بۆ دەستپێکردن!</div>
-            <button class="modal-btn" onclick="saveUserData()">دەستپێکردن</button>
+            <div id="modal-error" style="color: #f43f5e; font-size: 12px; font-weight: 600; margin-bottom: 10px; display: none;">تکایە ناوت بنووسە یان بێ ئەکاونت بچۆ ژوورەوە!</div>
+            <button class="modal-btn" onclick="saveUserData()">دەستپێکردن بە ناو</button>
+            <button class="secondary-modal-btn" onclick="skipLoginWithoutAccount()">چوونەژوورەوە بێ ئەکاونت 🚀</button>
+            <div style="margin-top: 14px; font-size: 11.5px; opacity: 0.6; font-weight: bold;">وەشانی ئەپ: v24.0 Pro Edition</div>
         </div>
     </div>
 
@@ -422,7 +433,7 @@
         <div class="home-container">
             <div class="header-flex-box">
                 <div class="creator-box">
-                    <div>دروستکراوە لەلایەن</div>
+                    <div>دروستکراوە لەلایەن (ئەلەند) | وەشانی: v24.0</div>
                     <div class="creator-links">
                         <a href="https://instagram.com/v4n.ix7" target="_blank">📸 ئینستاگرام</a>
                         <a href="https://tiktok.com/@snowboy.tiktokkkk" target="_blank">🎵 تیکتۆک</a>
@@ -432,42 +443,42 @@
 
             <div class="top-info-grid">
                 <div class="info-card">
-                    <strong>⚛️ خشتەی خولی</strong>
-                    سەرجەم ١١٨ توخمی کیمیایی بە هەموو وردەکارییەکانەوە.
+                    <strong>⚛️ خشتەی خولی شاهانە</strong>
+                    سەرجەم ١١٨ توخمی کیمیایی بە وردەکاری پێشکەوتووەوە.
                 </div>
                 <div class="info-card">
-                    <strong>🧪 تاقیگەی کیمیا</strong>
-                    تێکەڵکردنی توخمەکان و دروستکردنی کارلێکی کیمیایی.
+                    <strong>🧪 تاقیگەی مۆدێرن</strong>
+                    تێکەڵکردنی توخمەکان بە شێوازی تاقیگەی ڕاستەقینە.
                 </div>
             </div>
 
-            <div id="welcome" class="welcome-banner">بەخێربێیت بۆ ناوەندی کیمیا. شوێنێکی زۆر ڕاستت هەڵبژاردووە!</div>
-            <h1>ناوەندی زانست و زانیاری کیمیا</h1>
+            <div id="welcome" class="welcome-banner">بەخێربێیت بۆ ناوەندی کیمیا. گەورەترین ناوەندی زانستی کوردی!</div>
+            <h1>ناوەندی سەرنجڕاکێشی زانست و زانیاری کیمیا</h1>
             
             <div class="home-text-box">
-                <p style="margin-top: 0; font-weight: 700; color: #818cf8; font-size: 15px;">🎯 ئامانج و سوودەکانی بەرنامە بۆ قوتابیان:</p>
-                <p>ئەم بەرنامەیە وەک ڕێنماییکارێکی زیرەک و بەهێز دروستکراوە تاوەکو هاوکاری قوتابیان بێت لە تێگەیشتنی خێرا و ئاسانی بابەتە ئاڵۆزەکانی کیمیا:</p>
-                <ul style="padding-right: 20px; line-height: 2;">
-                    <li>دۆزینەوەی سەرجەم ١١٨ توخمەکە لەگەڵ ژمارە و ناوەکانیان.</li>
-                    <li>تاقیگەی تێکەڵکردنی توخمەکان و بینینی کارلێکی کیمیایی.</li>
-                    <li>تاقیکردنەوەی خێرا بە هەڵبژاردنی نزیک و بێ پەنجەرەی پچڕێنەر.</li>
+                <p style="margin-top: 0; font-weight: 700; color: #818cf8; font-size: 15.5px;">💎 دەربارەی پلاتفۆرمی ناوەندی کیمیا:</p>
+                <p>ئەم ئەپلیکەیشنە شاهانەیە بەرهەمی ماندووبوون، شەونخوونی و هەوڵێکی بێوێنەیە بۆ خزمەتکردنی زانست لە کوردستان. ئامانجمان ئەوەیە بابەتە ئاڵۆزەکانی کیمیا بکەینە گەشتێکی چێژبەخش و ئاسان بۆ هەموو قوتابییەک:</p>
+                <ul style="padding-right: 20px; line-height: 2.1;">
+                    <li>دۆزینەوەی خێرای سەرجەم ١١٨ توخمی خشتەی خولی بە داتای زانستیی وردەوە.</li>
+                    <li>تاقیگەی زیرەکی کیمیایی بۆ ئەنجامدانی کارلێکە مەترسیدار و سەرنجڕاکێشەکان بە سەلامەتی.</li>
+                    <li>تاقیکردنەوە و چاڵنجی کاتی پێشکەوتوو بۆ تاقیکردنەوەی ئاستی زانستیت.</li>
                 </ul>
-                <p style="margin-bottom: 0; font-weight: 700; color: #4ade80;">💡 «زانست هێزە؛ تێگەیشتن لە کیمیا، تێگەیشتنە لە دروستبوونی جیهان!»</p>
+                <p style="margin-bottom: 0; font-weight: 700; color: #4ade80;">💡 «کیمیا تەنها ماددە نییە، بەڵکو دروستکەری نهێنییەکانی گەردوونە!»</p>
             </div>
 
             <div class="feedback-box-home">
-                گلەیی، کێشە یان پێشنیارێکت هەیە؟ ڕاستەوخۆ لە ڕێگەی تیکتۆکەوە پەیام بنێرە:<br>
+                هەر پێشنیار، گلەیی یان ڕەخنەیەک هەیە؟ ڕاستەوخۆ لە ڕێگەی تیکتۆکەوە پەیوەندیم پێوە بکە:<br>
                 <a href="https://tiktok.com/@snowboy.tiktokkkk" target="_blank">تیکتۆک: snowboy.tiktokkkk</a>
             </div>
         </div>
     </div>
 
-    <!-- 2. بەشی تاقیگەی کارلێکی کیمیایی -->
+    <!-- 2. بەشی تاقیگەی کارلێکی کیمیایی (بە ڕەنگی تاریک و شاز) -->
     <div id="tab-lab" class="tab-content">
-        <div class="lab-container">
-            <h2>🧪 تاقیگەی ئۆنلاینی کارلێکی کیمیایی</h2>
+        <div class="lab-container" style="background: #090912; border: 1px solid rgba(129, 140, 248, 0.25);">
+            <h2 style="background: rgba(15, 15, 30, 0.8); border-color: rgba(129, 140, 248, 0.3); color: #818cf8;">🧪 تاقیگەی تاریك و پێشکەوتووی کارلێکی کیمیایی</h2>
             <p style="font-size: 13.5px; opacity: 0.9; line-height: 1.6; margin-bottom: 20px;">
-                لێرەدا دەتوانیت دوو ماددە یان توخم هەڵبژێریت بۆ ئەوەی بزانیت لە کاتی تێکەڵکردنیان چ کارلێکێک ڕوودەدات و چ بەرهەمێک دەردەچێت!
+                لەم ژینگەیە تایبەتەدا، دەتوانیت دوو ماددە یان توخم هەڵبژێریت و ئەنجامی کارلێکە کیمیاییەکەیان بە شێوازی تاقیگەی ڕاستەقینە ببینیت!
             </p>
 
             <div class="app-dropdown-container">
@@ -505,7 +516,7 @@
 
             <button class="modal-btn" style="margin-top: 10px;" onclick="runReaction()">🔬 ئەنجامدانی کارلێک</button>
 
-            <div id="lab-result-box" style="display: none; margin-top: 22px; background: var(--input-bg); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: right;">
+            <div id="lab-result-box" style="display: none; margin-top: 22px; background: rgba(0,0,0,0.4); border: 1px solid rgba(129, 140, 248, 0.3); padding: 20px; border-radius: 16px; text-align: right;">
                 <h3 style="margin-top: 0; color: #4ade80; font-size: 16px; text-align: right; background:none; border:none; padding:0;">⚡ ئەنجامی کارلێکەکە:</h3>
                 <p id="lab-eq" style="font-size: 16px; font-weight: bold; color: #818cf8; margin: 10px 0; direction: ltr; text-align: center;"></p>
                 <p id="lab-desc" style="font-size: 13.5px; opacity: 0.9; line-height: 1.7; margin: 0;"></p>
@@ -513,9 +524,17 @@
         </div>
     </div>
 
-    <!-- 3. بەشی خشتەی خولی (١١٨ توخم) -->
+    <!-- 3. بەشی خشتەی خولی (١١٨ توخم) کە دوگمەی خێرای تاقیگەی لە سەرەوە تیادایە -->
     <div id="tab-table" class="tab-content">
         <h1>لیستی ١١٨ توخمی خشتەی خولی</h1>
+        
+        <!-- دوگمەی خێرا بۆ چوونە ناو بەشی تاقیگە لە ناو خشتەدا -->
+        <div style="width: 100%; max-width: 850px; margin-bottom: 15px; text-align: center;">
+            <button onclick="switchTab('tab-lab', document.querySelectorAll('.nav-item')[1])" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border: none; padding: 12px 24px; border-radius: 14px; font-weight: bold; font-size: 14px; cursor: pointer; box-shadow: 0 5px 20px rgba(99,102,241,0.4); width: 100%;">
+                🧪 کردنەوەی تاقیگەی کیمیایی (تایبەت بە تێکەڵکردنی ماددەکان)
+            </button>
+        </div>
+
         <div class="filter-buttons">
             <button class="filter-btn active" onclick="filterByCategory('all', this)">هەموو توخمەکان (١١٨)</button>
             <button class="filter-btn" onclick="filterByCategory('fav', this)">⭐ دڵخوازەکان</button>
@@ -727,9 +746,9 @@
                 <p style="font-size: 12px; opacity: 0.8; margin: 4px 0 10px 0;">گۆرانییەک هەڵبژێرە بۆ لێدان ڕاستەوخۆ لەناو ئەپەکەدا:</p>
                 
                 <div class="music-btn-group">
-                    <button class="music-btn" id="mbtn-1" onclick="playTrack(1)">🎤 حەسەن زیرەک (هەر تۆم دەوێ)</button>
-                    <button class="music-btn" id="mbtn-2" onclick="playTrack(2)">🎤 زەکەریا (بۆچی هاتی)</button>
-                    <button class="music-btn" id="mbtn-3" onclick="playTrack(3)">🎤 حەسەن زیرەک (باوانەکەی بابم)</button>
+                    <button class="music-btn" id="mbtn-1" onclick="playTrack(1)">🎤 گۆرانی یەکەم</button>
+                    <button class="music-btn" id="mbtn-2" onclick="playTrack(2)">🎤 گۆرانی دووەم</button>
+                    <button class="music-btn" id="mbtn-3" onclick="playTrack(3)">🎤 گۆرانی سێیەم</button>
                 </div>
 
                 <div class="music-controls">
@@ -769,7 +788,7 @@
 
             <div class="settings-card">
                 <span>📌 وەشانی ئەپ:</span>
-                <strong style="color: #818cf8;">v23.0 Online Audio Edition</strong>
+                <strong style="color: #818cf8;">v24.0 Pro Edition</strong>
             </div>
 
             <div class="settings-card">
@@ -813,7 +832,6 @@
         let favorites = JSON.parse(localStorage.getItem('chem_favs') || '[]');
         let currentTrackId = null;
 
-        // بەکارهێنانی لینکە ئۆنلاینە راستەوخۆکان بۆ ئەوەی بێ کێشە کاربکەن
         const songsList = {
             1: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
             2: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
@@ -823,7 +841,6 @@
         function playTrack(trackId) {
             playSound('click');
             let player = document.getElementById('app-bg-music');
-            
             document.querySelectorAll('.music-btn').forEach(b => b.classList.remove('playing'));
 
             if (currentTrackId === trackId && !player.paused) {
@@ -959,7 +976,15 @@
                 return;
             }
             userName = nameVal;
-            document.getElementById('welcome').innerText = `بەخێربێی بۆ ناوەندی کیمیا، ${userName}. شوێنێکی زۆر ڕاستت هەڵبژاردووە!`;
+            document.getElementById('welcome').innerText = `بەخێربێی بۆ ناوەندی کیمیا، ${userName}. هەوڵ و ماندووبوونی بەردەوام سەرکەوتنە!`;
+            document.getElementById('name-modal').style.display = 'none';
+            document.getElementById('main-bottom-nav').style.display = 'flex';
+        }
+
+        function skipLoginWithoutAccount() {
+            playSound('success');
+            userName = "قوتابی بەڕێز";
+            document.getElementById('welcome').innerText = `بەخێربێی بۆ ناوەندی کیمیا. خۆشحاڵین بە ئامادەبوونت!`;
             document.getElementById('name-modal').style.display = 'none';
             document.getElementById('main-bottom-nav').style.display = 'flex';
         }
@@ -969,7 +994,7 @@
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
+            if (btn) btn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -982,7 +1007,6 @@
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
 
-        // کۆدی بەشی تاقیگە
         function selectLabMat1(val, text, e) {
             if(e) e.stopPropagation();
             playSound('click');
@@ -1520,7 +1544,7 @@
             document.getElementById('quiz-results').style.display = 'block';
             document.getElementById('score-text').innerText = `${userName}، نمرەکەت: ${score} لە ${activeQuestions.length}`;
             
-            let quizType = document.getElementById('quiz-type.value') || document.getElementById('quiz-type').value;
+            let quizType = document.getElementById('quiz-type').value;
             let swResult = document.getElementById('stopwatch-result-text');
             if (quizType === 'normal') {
                 swResult.innerText = `⏱️ کۆۆی کاتی بەکارهاتوو بۆ تەواوکردنی پرسیارەکان: ${elapsedSeconds} چرکە`;
