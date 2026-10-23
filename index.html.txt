@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="ku" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ناوەندی کیمیا</title>
+    <style>
+        :root {
+            --bg-gradient: radial-gradient(circle at 50% 10%, #1e1b4b 0%, #0f0c29 50%, #030309 100%);
+            --text-color: #ffffff;
+            --card-bg: rgba(20, 20, 45, 0.55);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --input-bg: rgba(255, 255, 255, 0.06);
+            --modal-bg: rgba(18, 18, 42, 0.96);
+            --base-font-size: 14px;
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+            --text-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(0, 0, 0, 0.12);
+            --input-bg: rgba(0, 0, 0, 0.04);
+            --modal-bg: rgba(255, 255, 255, 0.96);
+        }
+
+        [data-eye-care="true"] {
+            --bg-gradient: #121814 !important;
+            --text-color: #d1fae5 !important;
+            --card-bg: rgba(6, 78, 59, 0.25) !important;
+            --card-border: rgba(52, 211, 153, 0.3) !important;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px 15px 130px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            direction: rtl;
+            position: relative;
+            overflow-x: hidden;
+            color: var(--text-color);
+            font-size: var(--base-font-size);
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            max-width: 950px;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tab-content.active {
+            display: flex;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        #name-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 9, 0.96);
+            backdrop-filter: blur(25px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 999999;
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 28px 22px;
+            border-radius: 28px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            text-align: center;
+            width: 92%; max-width: 420px;
+            border: 1px solid var(--card-border);
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            color: var(--text-color);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-app-info {
+            background: rgba(129, 140, 248, 0.08);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            padding: 12px; border-radius: 14px;
+            font-size: 12.5px; color: var(--text-color); line-height: 1.6;
+            margin-bottom: 18px; text-align: right; opacity: 0.95;
+        }
+
+        .modal-content input {
+            width: 100%; padding: 14px 18px; font-size: 14px;
+            border-radius: 14px; border: 1px solid var(--card-border);
+            outline: none; margin-bottom: 12px; text-align: center;
+            background: var(--input-bg); color: var(--text-color); font-weight: bold;
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white; border: 1px solid rgba(255,255,255,0.2);
+            padding: 13px 20px; border-radius: 14px; font-size: 14.5px;
+            font-weight: bold; cursor: pointer; width: 100%;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+            margin-bottom: 10px;
+        }
+
+        .secondary-modal-btn {
+            background: rgba(129, 140, 248, 0.15);
+            color: #818cf8; border: 1px solid rgba(129, 140, 248, 0.4);
+            padding: 12px 20px; border-radius: 14px; font-size: 14px;
+            font-weight: bold; cursor: pointer; width: 100%;
+        }
+
+        .home-container, .settings-container, .lab-container {
+            width: 100%; max-width: 750px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px; padding: 30px 20px; 
+            border: 1px solid var(--card-border); 
+            text-align: center; color: var(--text-color);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+        }
+
+        .header-flex-box {
+            display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;
+        }
+
+        .creator-box {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--input-bg); padding: 14px 18px;
+            border-radius: 16px; border: 1px solid var(--card-border);
+            font-size: 14px; font-weight: 600; text-align: right;
+        }
+        .creator-links {
+            display: flex; gap: 8px; align-items: center;
+        }
+        .creator-links a {
+            color: #818cf8; text-decoration: none; background: rgba(129, 140, 248, 0.12);
+            padding: 6px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 700;
+        }
+
+        .top-info-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;
+        }
+        .info-card {
+            background: var(--input-bg); border: 1px solid var(--card-border);
+            padding: 12px; border-radius: 14px; font-size: 12.5px; text-align: right; opacity: 0.9;
+            line-height: 1.5;
+        }
+        .info-card strong { color: #818cf8; display: block; margin-bottom: 4px; font-size: 13.5px; }
+
+        .welcome-banner {
+            font-size: 15px; font-weight: 700; color: #818cf8; margin-bottom: 15px;
+            background: var(--input-bg); padding: 12px 18px; border-radius: 12px; display: inline-block;
+            border: 1px solid var(--card-border); line-height: 1.5; width: 100%;
+        }
+
+        .home-text-box {
+            background: var(--input-bg); padding: 22px;
+            border-radius: 16px; margin-top: 15px; text-align: right; border: 1px solid var(--card-border);
+            line-height: 1.9; font-size: 14px; opacity: 0.95;
+        }
+
+        .feedback-box-home {
+            margin-top: 18px; background: var(--input-bg); padding: 15px;
+            border-radius: 14px; font-size: 13px; font-weight: 600;
+            border: 1px solid var(--card-border);
+        }
+        .feedback-box-home a {
+            color: #818cf8; text-decoration: none; background: rgba(129, 140, 248, 0.12);
+            padding: 5px 12px; border-radius: 8px; display: inline-block; margin-top: 6px; font-weight: 700;
+        }
+
+        h1, h2 {
+            color: var(--text-color); background: var(--input-bg);
+            backdrop-filter: blur(12px); padding: 13px 20px;
+            border-radius: 16px; margin-top: 10px; margin-bottom: 18px; text-align: center;
+            font-size: 18px; font-weight: 700; border: 1px solid var(--card-border);
+        }
+
+        .filter-buttons {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+            margin-bottom: 20px; max-width: 850px;
+        }
+        .filter-btn {
+            background: var(--input-bg); border: 1px solid var(--card-border);
+            color: var(--text-color); padding: 9px 13px; border-radius: 10px;
+            font-weight: 600; cursor: pointer; font-size: 12px; opacity: 0.9;
+        }
+        .filter-btn:hover, .filter-btn.active { background: rgba(129, 140, 248, 0.25); color: #fff; border-color: rgba(129, 140, 248, 0.4); opacity: 1; }
+
+        #search-box {
+            width: 100%; max-width: 500px; padding: 13px 18px; font-size: 14.5px;
+            border-radius: 12px; border: 1px solid var(--card-border);
+            outline: none; margin-bottom: 20px; background: var(--input-bg);
+            color: var(--text-color); direction: rtl; font-weight: 600;
+        }
+
+        #details {
+            background: var(--modal-bg); padding: 22px; border-radius: 18px;
+            width: 100%; max-width: 550px; text-align: right; color: var(--text-color);
+            margin-bottom: 22px; display: none; border: 1px solid var(--card-border); line-height: 1.8;
+            box-shadow: 0 0 25px rgba(129, 140, 248, 0.3);
+            scroll-margin-top: 20px;
+        }
+        #details p { margin: 7px 0; font-size: 14px; opacity: 0.9; }
+
+        .fav-btn-card {
+            background: var(--input-bg); border: 1px solid var(--card-border); color: #fbbf24;
+            padding: 9px 16px; border-radius: 12px; cursor: pointer; font-weight: bold;
+            font-size: 13.5px; width: 100%; margin-bottom: 10px; text-align: center;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+
+        .speak-btn-card {
+            background: rgba(129, 140, 248, 0.15); border: 1px solid rgba(129, 140, 248, 0.3); color: #818cf8;
+            padding: 9px 16px; border-radius: 12px; cursor: pointer; font-weight: bold;
+            font-size: 13.5px; width: 100%; margin-bottom: 12px; text-align: center;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+
+        .extra-info-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            border: none; color: #fff; padding: 10px 16px; border-radius: 12px;
+            font-weight: 700; font-size: 13px; cursor: pointer; width: 100%; margin-top: 10px;
+        }
+
+        #academic-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 9, 0.85); backdrop-filter: blur(20px);
+            display: none; justify-content: center; align-items: center; z-index: 9999999;
+        }
+        .academic-modal-content {
+            background: var(--modal-bg); border: 1px solid rgba(129, 140, 248, 0.3);
+            padding: 25px; border-radius: 24px; width: 90%; max-width: 480px;
+            text-align: right; box-shadow: 0 20px 50px rgba(0,0,0,0.8); color: var(--text-color);
+            max-height: 85vh; overflow-y: auto;
+        }
+        .close-modal-btn {
+            background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.4);
+            color: #f43f5e; padding: 10px; border-radius: 12px; font-weight: 700;
+            width: 100%; margin-top: 15px; cursor: pointer;
+        }
+
+        .category-badge {
+            display: inline-block; padding: 5px 16px; border-radius: 16px;
+            font-weight: 700; margin-top: 8px; font-size: 12px;
+        }
+
+        #elements-list {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+            gap: 10px; width: 100%; max-width: 950px; margin-bottom: 30px; direction: ltr;
+        }
+        .element-card {
+            padding: 10px 6px; border-radius: 12px; border: 1px solid var(--card-border);
+            cursor: pointer; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center; min-height: 85px; transition: 0.2s; position: relative;
+        }
+        .element-card:hover { transform: scale(1.08); z-index: 10; box-shadow: 0 0 15px rgba(129, 140, 248, 0.8); }
+        .el-num { font-size: 10px; font-weight: 700; align-self: flex-start; margin-left: 4px; opacity: 0.8; }
+        .el-symbol { font-size: 17px; font-weight: 800; margin: 1px 0; }
+        .el-name-ku { font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; direction: rtl; }
+        .el-name-en { font-size: 9.5px; opacity: 0.75; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+        .alkali { background: rgba(217, 119, 6, 0.35); color: #fef08a; }
+        .alkaline-earth { background: rgba(202, 138, 4, 0.35); color: #fef9c3; }
+        .transition { background: rgba(180, 83, 9, 0.35); color: #fed7aa; }
+        .other-transition { background: rgba(101, 163, 13, 0.35); color: #ecfccb; }
+        .metalloid { background: rgba(13, 148, 136, 0.35); color: #ccfbf1; }
+        .halogen { background: rgba(157, 23, 77, 0.35); color: #ffe4e6; }
+        .noble-gas { background: rgba(109, 40, 217, 0.35); color: #ede9fe; }
+        .nonmetal { background: rgba(15, 118, 110, 0.35); color: #99f6e4; }
+        .lanthanide { background: rgba(190, 24, 93, 0.35); color: #fbcfe8; }
+        .actinide { background: rgba(30, 64, 175, 0.38); color: #bfdbfe; }
+
+        .section-box {
+            background: var(--card-bg); padding: 20px; border-radius: 18px;
+            width: 100%; max-width: 900px; text-align: right; margin-bottom: 22px;
+            border: 1px solid var(--card-border); color: var(--text-color); overflow-x: auto;
+        }
+        .prefix-table, .si-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 13.5px; margin-top: 14px; }
+        .prefix-table th, .prefix-table td, .si-table th, .si-table td { padding: 11px; border-bottom: 1px solid var(--card-border); opacity: 0.9; }
+        .prefix-table th, .si-table th { background: var(--input-bg); opacity: 1; }
+        .derived-header { background: rgba(99, 102, 241, 0.25) !important; }
+
+        .quiz-section {
+            background: var(--card-bg); padding: 26px 20px; border-radius: 22px;
+            width: 100%; max-width: 580px; text-align: center; color: var(--text-color);
+            border: 1px solid var(--card-border); box-shadow: 0 15px 40px rgba(0,0,0,0.2); margin: 0 auto;
+        }
+        .app-dropdown-container { margin-bottom: 16px; text-align: right; width: 100%; position: relative; }
+        .app-dropdown-label { font-size: 13px; font-weight: 600; margin-bottom: 7px; display: block; opacity: 0.9; }
+        .app-select-box {
+            position: relative; width: 100%; background: var(--input-bg);
+            border: 1px solid var(--card-border); border-radius: 12px; padding: 13px 15px;
+            font-size: 14px; font-weight: 600; color: var(--text-color); cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .app-dropdown-menu {
+            display: none; position: absolute; top: 105%; left: 0; width: 100%;
+            background: var(--modal-bg); border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border: 1px solid var(--card-border); z-index: 99999; overflow: hidden; text-align: right;
+            max-height: 200px; overflow-y: auto;
+        }
+        .app-dropdown-item { padding: 13px 15px; font-size: 13.5px; font-weight: 600; opacity: 0.9; border-bottom: 1px solid var(--card-border); cursor: pointer; }
+        .app-dropdown-item:hover, .app-dropdown-item.selected { background: rgba(99, 102, 241, 0.4); color: #fff; opacity: 1; }
+
+        .quiz-inputs { display: flex; gap: 10px; justify-content: center; margin-bottom: 14px; flex-wrap: wrap; }
+        .quiz-inputs input { padding: 11px; border-radius: 10px; border: 1px solid var(--card-border); font-size: 13.5px; width: 100%; max-width: 300px; text-align: center; outline: none; background: var(--input-bg); color: var(--text-color); font-weight: bold; }
+        .option-btn {
+            background: var(--input-bg); border: 1px solid var(--card-border); padding: 14px; color: var(--text-color);
+            border-radius: 14px; font-size: 14.5px; font-weight: 600; cursor: pointer; margin: 8px 0; width: 100%; transition: 0.25s; text-align: center;
+        }
+        .option-btn.correct-glow { background: rgba(34, 197, 94, 0.4) !important; border-color: #22c55e !important; color: #fff !important; }
+        .option-btn.wrong-glow { background: rgba(239, 68, 68, 0.4) !important; border-color: #ef4444 !important; color: #fff !important; }
+
+        .quiz-text-answer-box {
+            display: flex; gap: 10px; margin-top: 15px; justify-content: center;
+        }
+        .quiz-text-answer-box input {
+            flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--card-border);
+            background: var(--input-bg); color: var(--text-color); font-size: 15px; text-align: center; font-weight: bold; outline: none;
+        }
+        .quiz-text-answer-box button {
+            padding: 12px 20px; border-radius: 12px; border: none; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white; font-weight: bold; cursor: pointer;
+        }
+
+        .settings-card {
+            background: var(--input-bg); border: 1px solid var(--card-border);
+            padding: 16px 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px; font-size: 14px; font-weight: 600; text-align: right;
+            flex-wrap: wrap; gap: 10px;
+        }
+        .theme-switch-btn, .action-setting-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: #fff; border: none; padding: 8px 16px; border-radius: 10px;
+            cursor: pointer; font-weight: 700; font-size: 13px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* بەشی مۆسیقا پلەیەر */
+        .music-box {
+            background: var(--input-bg); border: 1px solid var(--card-border);
+            padding: 18px 20px; border-radius: 18px; margin-bottom: 16px;
+            text-align: right; width: 100%;
+        }
+        .music-btn-group {
+            display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap;
+        }
+        .music-btn {
+            background: rgba(129, 140, 248, 0.15); border: 1px solid rgba(129, 140, 248, 0.3);
+            color: var(--text-color); padding: 10px 14px; border-radius: 12px;
+            cursor: pointer; font-size: 12.5px; font-weight: bold; flex: 1; min-width: 120px;
+            text-align: center; transition: 0.2s;
+        }
+        .music-btn.playing {
+            background: #22c55e !important; color: #fff !important; border-color: #22c55e !important;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+        }
+        .music-controls {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-top: 14px; background: rgba(0,0,0,0.2); padding: 10px 14px; border-radius: 12px;
+        }
+
+        .bottom-nav {
+            position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
+            width: 92%; max-width: 560px; background: var(--modal-bg); backdrop-filter: blur(25px);
+            border: 1px solid var(--card-border); padding: 8px 12px;
+            display: none; justify-content: space-around; align-items: center; border-radius: 26px; z-index: 999;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .nav-item {
+            background: transparent; border: none; color: var(--text-color); opacity: 0.6;
+            padding: 8px 10px; border-radius: 18px; cursor: pointer; font-size: 11px; font-weight: 700; transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+        }
+        .nav-item svg { width: 18px; height: 18px; fill: currentColor; }
+        .nav-item.active {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: #ffffff; opacity: 1; box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5); transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- پەنجەرەی ناونووسین و دەستپێک -->
+    <div id="name-modal">
+        <div class="modal-content">
+            <h3>بەخێربێی بۆ ناوەندی کیمیا</h3>
+            <div class="modal-app-info">
+                🌟 ئەم پلاتفۆرمە پێشکەوتووە بە ماندووبوونێکی زۆر، دڵسۆزی و شەونخوونییەکی بەردەوام دروستکراوە تاوەکو بێت و باشترین و ئاسانترین ئەزموونی فێربوونی کیمیا پێشکەش بە قوتابیان و ئارەزوومەندان بکات.
+            </div>
+            <input type="text" id="user-name-input" placeholder="ناوی خۆت لێرە بنووسە...">
+            <div id="modal-error" style="color: #f43f5e; font-size: 12px; font-weight: 600; margin-bottom: 10px; display: none;">تکایە ناوت بنووسە یان بێ ئەکاونت بچۆ ژوورەوە!</div>
+            <button class="modal-btn" onclick="saveUserData()">دەستپێکردن بە ناو</button>
+            <button class="secondary-modal-btn" onclick="skipLoginWithoutAccount()">چوونەژوورەوە بێ ئەکاونت 🚀</button>
+            <div style="margin-top: 14px; font-size: 11.5px; opacity: 0.6; font-weight: bold;">وەشانی ئەپ: v24.0 Pro Edition</div>
+        </div>
+    </div>
+
+    <div id="academic-modal">
+        <div class="academic-modal-content">
+            <h3 id="ac-modal-title">زانیاری ئەکادیمی ورد</h3>
+            <p id="ac-modal-desc"></p>
+            <button class="close-modal-btn" onclick="closeAcademicModal()">داخستن</button>
+        </div>
+    </div>
+
+    <!-- 1. بەشی سەرەکی -->
+    <div id="tab-home" class="tab-content active">
+        <div class="home-container">
+            <div class="header-flex-box">
+                <div class="creator-box">
+                    <div>دروستکراوە لەلایەن (ئەلەند) | وەشانی: v24.0</div>
+                    <div class="creator-links">
+                        <a href="https://instagram.com/v4n.ix7" target="_blank">📸 ئینستاگرام</a>
+                        <a href="https://tiktok.com/@snowboy.tiktokkkk" target="_blank">🎵 تیکتۆک</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-info-grid">
+                <div class="info-card">
+                    <strong>⚛️ خشتەی خولی شاهانە</strong>
+                    سەرجەم ١١٨ توخمی کیمیایی بە وردەکاری پێشکەوتووەوە.
+                </div>
+                <div class="info-card">
+                    <strong>🧪 تاقیگەی مۆدێرن</strong>
+                    تێکەڵکردنی توخمەکان بە شێوازی تاقیگەی ڕاستەقینە.
+                </div>
+            </div>
+
+            <div id="welcome" class="welcome-banner">بەخێربێیت بۆ ناوەندی کیمیا. گەورەترین ناوەندی زانستی کوردی!</div>
+            <h1>ناوەندی سەرنجڕاکێشی زانست و زانیاری کیمیا</h1>
+            
+            <div class="home-text-box">
+                <p style="margin-top: 0; font-weight: 700; color: #818cf8; font-size: 15.5px;">💎 دەربارەی پلاتفۆرمی ناوەندی کیمیا:</p>
+                <p>ئەم ئەپلیکەیشنە شاهانەیە بەرهەمی ماندووبوون، شەونخوونی و هەوڵێکی بێوێنەیە بۆ خزمەتکردنی زانست لە کوردستان. ئامانجمان ئەوەیە بابەتە ئاڵۆزەکانی کیمیا بکەینە گەشتێکی چێژبەخش و ئاسان بۆ هەموو قوتابییەک:</p>
+                <ul style="padding-right: 20px; line-height: 2.1;">
+                    <li>دۆزینەوەی خێرای سەرجەم ١١٨ توخمی خشتەی خولی بە داتای زانستیی وردەوە.</li>
+                    <li>تاقیگەی زیرەکی کیمیایی بۆ ئەنجامدانی کارلێکە مەترسیدار و سەرنجڕاکێشەکان بە سەلامەتی.</li>
+                    <li>تاقیکردنەوە و چاڵنجی کاتی پێشکەوتوو بۆ تاقیکردنەوەی ئاستی زانستیت.</li>
+                </ul>
+                <p style="margin-bottom: 0; font-weight: 700; color: #4ade80;">💡 «کیمیا تەنها ماددە نییە، بەڵکو دروستکەری نهێنییەکانی گەردوونە!»</p>
+            </div>
+
+            <div class="feedback-box-home">
+                هەر پێشنیار، گلەیی یان ڕەخنەیەک هەیە؟ ڕاستەوخۆ لە ڕێگەی تیکتۆکەوە پەیوەندیم پێوە بکە:<br>
+                <a href="https://tiktok.com/@snowboy.tiktokkkk" target="_blank">تیکتۆک: snowboy.tiktokkkk</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. بەشی تاقیگەی کارلێکی کیمیایی -->
+    <div id="tab-lab" class="tab-content">
+        <div class="lab-container" style="background: #090912; border: 1px solid rgba(129, 140, 248, 0.25);">
+            <h2 style="background: rgba(15, 15, 30, 0.8); border-color: rgba(129, 140, 248, 0.3); color: #818cf8;">🧪 تاقیگەی تاریك و پێشکەوتووی کارلێکی کیمیایی</h2>
+            <p style="font-size: 13.5px; opacity: 0.9; line-height: 1.6; margin-bottom: 20px;">
+                لەم ژینگەیە تایبەتەدا، دەتوانیت دوو ماددە یان توخم هەڵبژێریت و ئەنجامی کارلێکە کیمیاییەکەیان بە شێوازی تاقیگەی ڕاستەقینە ببینیت!
+            </p>
+
+            <div class="app-dropdown-container">
+                <span class="app-dropdown-label">ماددەی یەکەم (Reactant 1):</span>
+                <div class="app-select-box" onclick="toggleDropdown('lab-mat1-menu')">
+                    <span id="selected-lab-mat1">سۆدیۆم (Na)</span>
+                    <span>▼</span>
+                    <div id="lab-mat1-menu" class="app-dropdown-menu">
+                        <div class="app-dropdown-item selected" onclick="selectLabMat1('Na', 'سۆدیۆم (Na)', event)">سۆدیۆم (Na)</div>
+                        <div class="app-dropdown-item" onclick="selectLabMat1('H2', 'هایدرۆجین (H₂)', event)">هایدرۆجین (H₂)</div>
+                        <div class="app-dropdown-item" onclick="selectLabMat1('C', 'کاربۆن (C)', event)">کاربۆن (C)</div>
+                        <div class="app-dropdown-item" onclick="selectLabMat1('Ca', 'کالسێۆم (Ca)', event)">کالسێۆم (Ca)</div>
+                        <div class="app-dropdown-item" onclick="selectLabMat1('HCl', 'ترشی هایدرۆکلۆریک (HCl)', event)">ترشی هایدرۆکلۆریک (HCl)</div>
+                        <div class="app-dropdown-item" onclick="selectLabMat1('Fe', 'ئاسن (Fe)', event)">ئاسن (Fe)</div>
+                    </div>
+                </div>
+                <input type="hidden" id="lab-m1" value="Na">
+            </div>
+
+            <div class="app-dropdown-container">
+                <span class="app-dropdown-label">ماددەی دووەم (Reactant 2):</span>
+                <div class="app-select-box" onclick="toggleDropdown('lab-mat2-menu')">
+                    <span id="selected-lab-mat2">ئۆکسجین (O₂)</span>
+                    <span>▼</span>
+                    <div id="lab-mat2-menu" class="app-dropdown-menu">
+                        <div class="app-dropdown-item selected" onclick="selectLabMat2('O2', 'ئۆکسجین (O₂)', event)">ئۆکسجین (O₂)</div>
+                        <div class="app-dropdown-item" onclick="selectLabMat2('Cl2', 'کلۆر (Cl₂)', event)">کلۆر (Cl₂)</div>
+                        <div class="app-dropdown-item" onclick="selectLabMat2('H2O', 'ئاو (H₂O)', event)">ئاو (H₂O)</div>
+                        <div class="app-dropdown-item" onclick="selectLabMat2('OH', 'هایدروکسید (OH)', event)">هایدروکسید (OH)</div>
+                        <div class="app-dropdown-item" onclick="selectLabMat2('NaOH', 'سۆدیۆم هایدروکسید (NaOH)', event)">سۆدیۆم هایدروکسید (NaOH)</div>
+                    </div>
+                </div>
+                <input type="hidden" id="lab-m2" value="O2">
+            </div>
+
+            <button class="modal-btn" style="margin-top: 10px;" onclick="runReaction()">🔬 ئەنجامدانی کارلێک</button>
+
+            <div id="lab-result-box" style="display: none; margin-top: 22px; background: rgba(0,0,0,0.4); border: 1px solid rgba(129, 140, 248, 0.3); padding: 20px; border-radius: 16px; text-align: right;">
+                <h3 style="margin-top: 0; color: #4ade80; font-size: 16px; text-align: right; background:none; border:none; padding:0;">⚡ ئەنجامی کارلێکەکە:</h3>
+                <p id="lab-eq" style="font-size: 16px; font-weight: bold; color: #818cf8; margin: 10px 0; direction: ltr; text-align: center;"></p>
+                <p id="lab-desc" style="font-size: 13.5px; opacity: 0.9; line-height: 1.7; margin: 0;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. بەشی خشتەی خولی -->
+    <div id="tab-table" class="tab-content">
+        <h1>لیستی ١١٨ توخمی خشتەی خولی</h1>
+        
+        <div style="width: 100%; max-width: 850px; margin-bottom: 15px; text-align: center;">
+            <button onclick="switchTab('tab-lab', document.querySelectorAll('.nav-item')[1])" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border: none; padding: 12px 24px; border-radius: 14px; font-weight: bold; font-size: 14px; cursor: pointer; box-shadow: 0 5px 20px rgba(99,102,241,0.4); width: 100%;">
+                🧪 کردنەوەی تاقیگەی کیمیایی (تایبەت بە تێکەڵکردنی ماددەکان)
+            </button>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterByCategory('all', this)">هەموو توخمەکان (١١٨)</button>
+            <button class="filter-btn" onclick="filterByCategory('fav', this)">⭐ دڵخوازەکان</button>
+            <button class="filter-btn" onclick="filterByCategory('heavy', this)">🔥 توخمە قورستەکان (A>200)</button>
+            <button class="filter-btn" onclick="filterByCategory('gas', this)">💨 گازەکان</button>
+            <button class="filter-btn" onclick="filterByCategory('liquid', this)">💧 شلەکان</button>
+            <button class="filter-btn" onclick="filterByCategory('solid', this)">🧱 ڕەقەکان</button>
+            <button class="filter-btn" onclick="filterByCategory('metal', this)">⚙️ کانزاکان</button>
+            <button class="filter-btn" onclick="filterByCategory('nonmetal', this)">🧪 ناکانزاکان</button>
+            <button class="filter-btn" onclick="filterByCategory('metalloid', this)">⚡ نیمچەکانزاکان</button>
+        </div>
+
+        <input type="text" id="search-box" placeholder="گەڕان بەدوای ناوی کوردی، ئینگلیزی، هێما یان ژمارە..." onkeyup="filterElements()">
+
+        <div id="details" class="glass-card">
+            <button class="fav-btn-card" id="fav-toggle-btn" onclick="toggleCurrentFavorite()">⭐ زیادکردن بۆ دڵخواز</button>
+            <button class="speak-btn-card" onclick="speakCurrentElement()">🔊 خوێندنەوەی ناوی توخمەکە</button>
+            <h2 id="det-title" style="margin: 0 0 10px 0; background: none; border: none; padding: 0; text-align: right; color: #818cf8;"></h2>
+            <p id="det-num"></p>
+            <p id="det-weight"></p>
+            <p id="det-state"></p>
+            <p id="det-discoverer"></p>
+            <p id="det-uses"></p>
+            <div class="category-badge" id="det-cat"></div>
+            <button class="extra-info-btn" onclick="openAcademicModal()">📖 زانیاری زیاتر و ئەکادیمی</button>
+        </div>
+
+        <div id="elements-list"></div>
+    </div>
+
+    <!-- 4. بەشی یاساکانی SI -->
+    <div id="tab-laws" class="tab-content">
+        <div class="section-box" style="border: 1px solid rgba(129, 140, 248, 0.4); background: rgba(99, 102, 241, 0.08);">
+            <h2 style="margin-top: 0; background:none; border:none; text-align:right; color: #818cf8;">📌 کورتەی یاسا و ڕێساکانی کیمیا (Cheat Sheet)</h2>
+            <p style="font-size: 13.5px; line-height: 1.8; opacity: 0.9;">
+                • <strong>ژمارەی مۆڵەکان:</strong> بارستە ÷ کێشی مۆلاری<br>
+                • <strong>چڕی:</strong> بارستە ÷ قەبارە<br>
+                • <strong>خەستی مۆلاری:</strong> ژمارەی مۆڵەکان ÷ قەبارە بە لیتر<br>
+                • <strong>یاسای گازی تەواو:</strong> پەستان × قەبارە = ژمارەی مۆڵ × نەگۆڕی گازەکان × پلەی گەرمی کەلڤین.
+            </p>
+        </div>
+
+        <div class="section-box">
+            <h2 style="margin-top: 0; background:none; border:none; text-align:right; color: #818cf8;">١. یەکە بنچینەییەکانی SI</h2>
+            <table class="si-table">
+                <thead>
+                    <tr><th>بڕە فیزیاییەکان</th><th>ناوی یەکە (کوردی)</th><th>کورتەی یەکە</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>درێژی</td><td>مەتر (Meter)</td><td><strong>m</strong></td></tr>
+                    <tr><td>بارستە</td><td>کیلۆگرام (Kilogram)</td><td><strong>kg</strong></td></tr>
+                    <tr><td>پلەی گەرمی</td><td>کەلڤین (Kelvin)</td><td><strong>K</strong></td></tr>
+                    <tr><td>کات</td><td>چرکە (Second)</td><td><strong>s</strong></td></tr>
+                    <tr><td>بڕی ماددە</td><td>مۆڵ (Mole)</td><td><strong>mol</strong></td></tr>
+                    <tr><td>تەژووی کارەبا</td><td>ئەمپێر (Ampere)</td><td><strong>A</strong></td></tr>
+                    <tr><td>تیژی ڕووناکی</td><td>کاندێلا (Candela)</td><td><strong>cd</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-box">
+            <h2 style="margin-top: 0; background:none; border:none; text-align:right; color: #818cf8;">٢. پێشگرەکانی یەکەی SI</h2>
+            <table class="prefix-table">
+                <thead>
+                    <tr><th>پێشگر</th><th>کورتەی یەکە</th><th>توانە هۆکار</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>تێرا (Tera)</td><td>T</td><td>10¹²</td></tr>
+                    <tr><td>گێگا (Giga)</td><td>G</td><td>10⁹</td></tr>
+                    <tr><td>مێگا (Mega)</td><td>M</td><td>10⁶</td></tr>
+                    <tr><td>کیلۆ (Kilo)</td><td>k</td><td>10³</td></tr>
+                    <tr><td>هێکۆ (Hecto)</td><td>h</td><td>10²</td></tr>
+                    <tr><td>دێکا (Deca)</td><td>da</td><td>10¹</td></tr>
+                    <tr><td>دێسی (Deci)</td><td>d</td><td>10⁻¹</td></tr>
+                    <tr><td>سەنتی (Centi)</td><td>c</td><td>10⁻²</td></tr>
+                    <tr><td>میڵی (Milli)</td><td>m</td><td>10⁻³</td></tr>
+                    <tr><td>مایکرۆ (Micro)</td><td>μ</td><td>10⁻⁶</td></tr>
+                    <tr><td>نانۆ (Nano)</td><td>n</td><td>10⁻⁹</td></tr>
+                    <tr><td>پیکۆ (Pico)</td><td>P</td><td>10⁻¹²</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-box">
+            <h2 style="margin-top: 0; background:none; border:none; text-align:right; color: #818cf8;">٣. یەکە وەرگیراوەکانی SI</h2>
+            <table class="si-table">
+                <thead>
+                    <tr>
+                        <th class="derived-header">بڕ</th>
+                        <th class="derived-header">هێمای بڕ</th>
+                        <th class="derived-header">یەکە</th>
+                        <th class="derived-header">کورتەی یەکە</th>
+                        <th class="derived-header">وەرگرتن</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>ڕووبەر</td><td>A</td><td>مەتر دووجا</td><td>m²</td><td>درێژی × پانى</td></tr>
+                    <tr><td>قەبارە</td><td>V</td><td>مەتر سێجا</td><td>m³</td><td>درێژی × پانى × بەرزى</td></tr>
+                    <tr><td>چڕی</td><td>d</td><td>کیلوگرام / مەتر سێجا</td><td>kg/m³</td><td>بارستە / قەبارە</td></tr>
+                    <tr><td>مۆڵە بارستە</td><td>M</td><td>کیلوگرام / مۆڵ</td><td>kg/mol</td><td>بارستە / بڕی ماددە</td></tr>
+                    <tr><td>خەستی مۆلاری</td><td>C</td><td>ژمارەی مۆڵەکان لە لیترێکدا</td><td>M</td><td>بڕی ماددە / قەبارە</td></tr>
+                    <tr><td>مۆڵە قەبارە</td><td>V<sub>m</sub></td><td>مەتر سێجا له مۆڵێکدا</td><td>m³/mol</td><td>قەبارە / بڕی ماددە</td></tr>
+                    <tr><td>وزە</td><td>E</td><td>جوول</td><td>J</td><td>هێز × درێژی</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 5. بەشی تاقیکردنەوە -->
+    <div id="tab-quiz" class="tab-content">
+        <div class="quiz-section">
+            <h2 id="quiz-main-title">تاقیکردنەوەی زانستی</h2>
+            <div id="quiz-setup">
+                <div class="app-dropdown-container">
+                    <span class="app-dropdown-label">جۆری تاقیکردنەوە:</span>
+                    <div class="app-select-box" onclick="toggleDropdown('type-menu')">
+                        <span id="selected-type-text">تاقیکردنەوەی ئاسایی (بێ کات)</span>
+                        <span>▼</span>
+                        <div id="type-menu" class="app-dropdown-menu">
+                            <div class="app-dropdown-item selected" onclick="selectQuizType('normal', 'تاقیکردنەوەی ئاسایی (بێ کات)', event)">تاقیکردنەوەی ئاسایی (بێ کات)</div>
+                            <div class="app-dropdown-item" onclick="selectQuizType('speed', 'تاقیکردنەوەی خێرا (چاڵنجی کات)', event)">تاقیکردنەوەی خێرا (چاڵنجی کات)</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="quiz-type" value="normal">
+                </div>
+
+                <div id="speed-time-container" class="app-dropdown-container" style="display: none;">
+                    <span class="app-dropdown-label">چاڵنجی کات (سانیە):</span>
+                    <div class="app-select-box" onclick="toggleDropdown('speed-time-menu')">
+                        <span id="selected-speed-time-text">٣٠ چرکە</span>
+                        <span>▼</span>
+                        <div id="speed-time-menu" class="app-dropdown-menu">
+                            <div class="app-dropdown-item" onclick="selectSpeedTime(10, '١٠ چرکە', event)">١٠ چرکە (زۆر خێرا 🔥)</div>
+                            <div class="app-dropdown-item" onclick="selectSpeedTime(20, '٢٠ چرکە', event)">٢٠ چرکە ⚡</div>
+                            <div class="app-dropdown-item selected" onclick="selectSpeedTime(30, '٣٠ چرکە', event)">٣٠ چرکە (ئاسایی)</div>
+                            <div class="app-dropdown-item" onclick="selectSpeedTime(60, '٦٠ چرکە', event)">٦٠ چرکە (١ خولەک)</div>
+                            <div class="app-dropdown-item" onclick="selectSpeedTime(120, '١٢٠ چرکە', event)">١٢٠ چرکە (٢ خولەک)</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="speed-seconds" value="30">
+                </div>
+
+                <div class="app-dropdown-container">
+                    <span class="app-dropdown-label">شێوازی وەڵامدانەوە:</span>
+                    <div class="app-select-box" onclick="toggleDropdown('mode-menu')">
+                        <span id="selected-mode-text">هەڵبژاردنی فرەیی</span>
+                        <span>▼</span>
+                        <div id="mode-menu" class="app-dropdown-menu">
+                            <div class="app-dropdown-item" onclick="selectQuizMode('text', 'نوسینی هێما و ژمارەی پێکەوە', event)">نوسینی هێما و ژمارەی پێکەوە</div>
+                            <div class="app-dropdown-item selected" onclick="selectQuizMode('mcq', 'هەڵبژاردنی فرەیی', event)">هەڵبژاردنی فرەیی</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="quiz-mode" value="mcq">
+                </div>
+
+                <div class="app-dropdown-container">
+                    <span class="app-dropdown-label">بابەتی تاقیکردنەوە:</span>
+                    <div class="app-select-box" onclick="toggleDropdown('cat-menu')">
+                        <span id="selected-cat-text">خشتەی خولی توخمەکان</span>
+                        <span>▼</span>
+                        <div id="cat-menu" class="app-dropdown-menu">
+                            <div class="app-dropdown-item selected" onclick="selectQuizCategory('elements', 'خشتەی خولی توخمەکان', event)">خشتەی خولی توخمەکان</div>
+                            <div class="app-dropdown-item" onclick="selectQuizCategory('base-units', '١. یەکە بنچینەییەکانی SI', event)">١. یەکە بنچینەییەکانی SI</div>
+                            <div class="app-dropdown-item" onclick="selectQuizCategory('prefix-units', '٢. پێشگرەکانی یەکەی SI', event)">٢. پێشگرەکانی یەکەی SI</div>
+                            <div class="app-dropdown-item" onclick="selectQuizCategory('derived-units', '٣. یەکە وەرگیراوەکانی SI', event)">٣. یەکە وەرگیراوەکانی SI</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="quiz-category" value="elements">
+                </div>
+
+                <div id="element-range-inputs" class="quiz-inputs">
+                    <label style="font-size: 13px; font-weight: 600; width:100%; text-align:right;">مەودای ژمارەی توخمەکان:</label>
+                    <label>لە ژمارە: <input type="number" id="from-num" value="1" min="1" max="118"></label>
+                    <label>تا ژمارە: <input type="number" id="to-num" value="20" min="1" max="118"></label>
+                </div>
+
+                <button class="modal-btn" style="margin-top: 5px;" onclick="startQuiz()">دەستپێکردنی تاقیکردنەوە</button>
+            </div>
+
+            <div id="quiz-play" style="display: none;">
+                <div id="quiz-timer-box" style="display: none; font-size: 15px; font-weight: bold; color: #f43f5e; margin-bottom: 10px;">⏱️ کاتی ماوە: <span id="time-left">30</span> چرکە</div>
+                <div id="quiz-stopwatch-box" style="display: none; font-size: 15px; font-weight: bold; color: #4ade80; margin-bottom: 10px;">⏱️ سانیەژمێر: <span id="elapsed-time">0</span> چرکە</div>
+                <div id="question-text" style="font-size: 15.5px; font-weight: 600; margin-bottom: 18px; color: #818cf8; line-height: 1.6;"></div>
+                <div id="mcq-options" style="display: none;"></div>
+                <div id="text-answer-container" class="quiz-text-answer-box" style="display: none;">
+                    <input type="text" id="user-text-answer" placeholder="نموونە: Ar18">
+                    <button onclick="submitTextAnswer()">ناردن</button>
+                </div>
+            </div>
+
+            <div id="quiz-results" style="display: none; text-align: right;">
+                <h3>ئەنجامی تاقیکردنەوە:</h3>
+                <p id="score-text" style="font-size: 16.5px; font-weight: 700; color: #4ade80;"></p>
+                <p id="stopwatch-result-text" style="font-size: 14.5px; font-weight: 600; color: #818cf8; margin-top: 8px;"></p>
+                <br>
+                <button class="modal-btn" onclick="resetQuiz()">تاقیکردنەوەیەکی تر</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. بەشی Siting -->
+    <div id="tab-settings" class="tab-content">
+        <div class="settings-container">
+            <h2>⚙️ ڕێکخستنەکانی ئەپ (Settings)</h2>
+
+            <!-- بەشی مۆسیقا پلەیەر کە فایلەکانی خۆت دەخوێنێتەوە -->
+            <div class="music-box">
+                <span style="font-size: 14.5px; font-weight: 700; color: #818cf8;">🎵 مۆسیقا و گۆرانی پاشبنەما:</span>
+                <p style="font-size: 12px; opacity: 0.8; margin: 4px 0 10px 0;">گۆرانییە دڵخوازەکەی خۆت هەڵبژێرە:</p>
+                
+                <div class="music-btn-group">
+                    <button class="music-btn" id="mbtn-1" onclick="playTrack(1)">🎤 گۆرانی یەکەم</button>
+                    <button class="music-btn" id="mbtn-2" onclick="playTrack(2)">🎤 گۆرانی دووەم</button>
+                    <button class="music-btn" id="mbtn-3" onclick="playTrack(3)">🎤 گۆرانی سێیەم</button>
+                </div>
+
+                <div class="music-controls">
+                    <button class="action-setting-btn" style="padding: 6px 12px; font-size: 12px;" onclick="stopMusic()">⏸️ ڕاگرتن</button>
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
+                        <span>🔈 دەنگ:</span>
+                        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.7" onchange="setVolume(this.value)" style="width: 80px;">
+                    </div>
+                </div>
+                <audio id="app-bg-music" loop></audio>
+            </div>
+            
+            <div class="settings-card">
+                <span>🌙 گۆڕینی دۆخی ڕووناک و تاریک:</span>
+                <button class="theme-switch-btn" id="theme-btn" onclick="toggleTheme()">دۆخی ڕووناک</button>
+            </div>
+
+            <div class="settings-card">
+                <span>👁️ دۆخی پاراستنی چاو (Eye Care):</span>
+                <button class="action-setting-btn" id="eyecare-btn" onclick="toggleEyeCare()">چالاککردن</button>
+            </div>
+
+            <div class="settings-card">
+                <span>🔤 قەبارەی دەقەکان (Font Size):</span>
+                <button class="action-setting-btn" onclick="changeFontSize()">گەورە / ئاسایی</button>
+            </div>
+
+            <div class="settings-card">
+                <span>⭐ پاککردنەوەی دڵخوازەکان:</span>
+                <button class="action-setting-btn" style="background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);" onclick="clearFavorites()">سڕینەوەی دڵخواز</button>
+            </div>
+
+            <div class="settings-card">
+                <span>🧹 سەرلەنوێ ڕێکخستنەوەی ئەپ:</span>
+                <button class="action-setting-btn" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);" onclick="clearAppData()">ڕیستکردنەوە</button>
+            </div>
+
+            <div class="settings-card">
+                <span>📌 وەشانی ئەپ:</span>
+                <strong style="color: #818cf8;">v24.0 Pro Edition</strong>
+            </div>
+
+            <div class="settings-card">
+                <span>👨‍💻 دروستکەر:</span>
+                <strong style="color: #4ade80;">ئەلەند</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- پاوەری خوارەوە -->
+    <div id="main-bottom-nav" class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('tab-home', this)">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            سەرەکی
+        </button>
+        <button class="nav-item" onclick="switchTab('tab-lab', this)">
+            <svg viewBox="0 0 24 24"><path d="M6 2h12v2H6V2zm1.46 4L5.14 8.32a2 2 0 0 0-.58 1.41V20a2 2 0 0 0 2 2h10.88a2 2 0 0 0 2-2V9.73a2 2 0 0 0-.58-1.41L16.54 6H7.46zM9 10h6v8H9v-8z"/></svg>
+            تاقیگە
+        </button>
+        <button class="nav-item" onclick="switchTab('tab-table', this)">
+            <svg viewBox="0 0 24 24"><path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm1 2v14h14V5H5zm2 2h3v3H7V7zm5 0h5v3h-5V7zm-5 5h3v3H7v-3zm5 0h5v3h-5v-3z"/></svg>
+            خشتە
+        </button>
+        <button class="nav-item" onclick="switchTab('tab-laws', this)">
+            <svg viewBox="0 0 24 24"><path d="M3 13h2v8H3v-8zm4-6h2v14H7V7zm4-4h2v18h-2V3zm4 8h2v10h-2V11zm4-3h2v13h-2V8z"/></svg>
+            یاسا
+        </button>
+        <button class="nav-item" onclick="switchTab('tab-quiz', this)">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            تاقیکردنەوە
+        </button>
+        <button class="nav-item" onclick="switchTab('tab-settings', this)">
+            <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6-3.6z"/></svg>
+            سێتینگ
+        </button>
+    </div>
+
+    <script>
+        let userName = "";
+        let currentSelectedElement = null;
+        let favorites = JSON.parse(localStorage.getItem('chem_favs') || '[]');
+        let currentTrackId = null;
+
+        /* لینکەکان ڕاستەوخۆ دەبەسترێنەوە بە فایلی گۆرانییەکانی خۆت لە گیتهەب */
+        const songsList = {
+            1: "song1.mp3",
+            2: "song2.mp3",
+            3: "song3.mp3"
+        };
+
+        function playTrack(trackId) {
+            playSound('click');
+            let player = document.getElementById('app-bg-music');
+            document.querySelectorAll('.music-btn').forEach(b => b.classList.remove('playing'));
+
+            if (currentTrackId === trackId && !player.paused) {
+                player.pause();
+                currentTrackId = null;
+            } else {
+                player.src = songsList[trackId];
+                player.play().then(() => {
+                    currentTrackId = trackId;
+                    document.getElementById(`mbtn-${trackId}`).classList.add('playing');
+                }).catch(e => {
+                    alert("فایلی گۆرانیەکە نەنۆزرایەوە! تکایە دڵنیابە لە گیتهەبەکەدا فایلی song1.mp3 و song2.mp3 هەبێت.");
+                });
+            }
+        }
+
+        function stopMusic() {
+            playSound('click');
+            let player = document.getElementById('app-bg-music');
+            player.pause();
+            currentTrackId = null;
+            document.querySelectorAll('.music-btn').forEach(b => b.classList.remove('playing'));
+        }
+
+        function setVolume(val) {
+            let player = document.getElementById('app-bg-music');
+            player.volume = val;
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if (!audioCtx) return;
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } else if (type === 'success') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            }
+        }
+
+        function speakCurrentElement() {
+            if (!currentSelectedElement) return;
+            playSound('click');
+            if ('speechSynthesis' in window) {
+                let textToSpeak = `${currentSelectedElement.nameEn}, symbol ${currentSelectedElement.symbol}`;
+                let utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('گەڕیدەکەت پشتگیری خوێندنەوەی دەنگی ناکات.');
+            }
+        }
+
+        function toggleTheme() {
+            playSound('click');
+            let html = document.documentElement;
+            let btn = document.getElementById('theme-btn');
+            html.removeAttribute('data-eye-care');
+            document.getElementById('eyecare-btn').innerText = 'چالاککردن';
+
+            if(html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                btn.innerText = 'دۆخی تاریک';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                btn.innerText = 'دۆخی ڕووناک';
+            }
+        }
+
+        function toggleEyeCare() {
+            playSound('click');
+            let html = document.documentElement;
+            let btn = document.getElementById('eyecare-btn');
+            if(html.getAttribute('data-eye-care') === 'true') {
+                html.removeAttribute('data-eye-care');
+                btn.innerText = 'چالاککردن';
+            } else {
+                html.setAttribute('data-eye-care', 'true');
+                btn.innerText = 'لادان';
+            }
+        }
+
+        let isLargeFont = false;
+        function changeFontSize() {
+            playSound('click');
+            let root = document.documentElement;
+            if(!isLargeFont) {
+                root.style.setProperty('--base-font-size', '16px');
+                isLargeFont = true;
+            } else {
+                root.style.setProperty('--base-font-size', '14px');
+                isLargeFont = false;
+            }
+        }
+
+        function clearFavorites() {
+            playSound('click');
+            favorites = [];
+            localStorage.removeItem('chem_favs');
+            alert('لیستی دڵخوازەکان پاککرایەوە.');
+            displayElements(elements);
+        }
+
+        function clearAppData() {
+            playSound('click');
+            if(confirm('ئایا دڵنیای لە پاککردنەوەی داتا و ڕێکخستنەکان؟')) {
+                location.reload();
+            }
+        }
+
+        function saveUserData() {
+            playSound('success');
+            let nameVal = document.getElementById('user-name-input').value.trim();
+            if (nameVal === "") {
+                document.getElementById('modal-error').style.display = 'block';
+                return;
+            }
+            userName = nameVal;
+            document.getElementById('welcome').innerText = `بەخێربێی بۆ ناوەندی کیمیا، ${userName}. هەوڵ و ماندووبوونی بەردەوام سەرکەوتنە!`;
+            document.getElementById('name-modal').style.display = 'none';
+            document.getElementById('main-bottom-nav').style.display = 'flex';
+        }
+
+        function skipLoginWithoutAccount() {
+            playSound('success');
+            userName = "قوتابی بەڕێز";
+            document.getElementById('welcome').innerText = `بەخێربێی بۆ ناوەندی کیمیا. خۆشحاڵین بە ئامادەبوونت!`;
+            document.getElementById('name-modal').style.display = 'none';
+            document.getElementById('main-bottom-nav').style.display = 'flex';
+        }
+
+        function switchTab(tabId, btn) {
+            playSound('click');
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if (btn) btn.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleDropdown(menuId) {
+            playSound('click');
+            let menu = document.getElementById(menuId);
+            document.querySelectorAll('.app-dropdown-menu').forEach(m => {
+                if(m !== menu) m.style.display = 'none';
+            });
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function selectLabMat1(val, text, e) {
+            if(e) e.stopPropagation();
+            playSound('click');
+            document.getElementById('lab-m1').value = val;
+            document.getElementById('selected-lab-mat1').innerText = text;
+            document.querySelectorAll('#lab-mat1-menu .app-dropdown-item').forEach(item => item.classList.remove('selected'));
+            if(e && e.target) e.target.classList.add('selected');
+            document.getElementById('lab-mat1-menu').style.display = 'none';
+        }
+
+        function selectLabMat2(val, text, e) {
+            if(e) e.stopPropagation();
+            playSound('click');
+            document.getElementById('lab-m2').value = val;
+            document.getElementById('selected-lab-mat2').innerText = text;
+            document.querySelectorAll('#lab-mat2-menu .app-dropdown-item').forEach(item => item.classList.remove('selected'));
+            if(e && e.target) e.target.classList.add('selected');
+            document.getElementById('lab-mat2-menu').style.display = 'none';
+        }
+
+        function runReaction() {
+            playSound('success');
+            let m1 = document.getElementById('lab-m1').value;
+            let m2 = document.getElementById('lab-m2').value;
+            let resBox = document.getElementById('lab-result-box');
+            let eqEl = document.getElementById('lab-eq');
+            let descEl = document.getElementById('lab-desc');
+            resBox.style.display = 'block';
+
+            if ((m1 === 'Na' && m2 === 'OH') || (m1 === 'OH' && m2 === 'Na')) {
+                eqEl.innerText = "Na + OH → NaOH";
+                descEl.innerText = "ئەمە کارلێکی دروستبوونی سۆدیۆم هایدروکسیدە (Caustic Soda)، کە بنکەیەکی زۆر بەهێزە و لە پیشەسازیدا بەکاردێت.";
+            } else if ((m1 === 'Na' && m2 === 'Cl2') || (m1 === 'Cl2' && m2 === 'Na')) {
+                eqEl.innerText = "2Na + Cl₂ → 2NaCl";
+                descEl.innerText = "ئەمە کارلێکی دروستبوونی خوێی چێشتە (Sodium Chloride)، کارلێکێکی گەرمبەخش و توندە.";
+            } else if ((m1 === 'H2' && m2 === 'O2') || (m1 === 'O2' && m2 === 'H2')) {
+                eqEl.innerText = "2H₂ + O₂ → 2H₂O";
+                descEl.innerText = "ئەمە کارلێکی دروستبوونی ئاوە لەسەر بنەمای سووتانی هایدروجین بە ئۆکسجین.";
+            } else if ((m1 === 'Ca' && m2 === 'O2') || (m1 === 'O2' && m2 === 'Ca')) {
+                eqEl.innerText = "2Ca + O₂ → 2CaO";
+                descEl.innerText = "ئەمە کارلێکی دروستبوونی ئۆکسیڈی کالسێۆمە (گەچی خاوێن).";
+            } else if ((m1 === 'H2' && m2 === 'Cl2') || (m1 === 'Cl2' && m2 === 'H2')) {
+                eqEl.innerText = "H₂ + Cl₂ → 2HCl";
+                descEl.innerText = "ئەمە کارلێکی دروستبوونی گازی ترشی هایدرۆکلۆریکە (Hydrochloric Acid) بە تێکەڵبوونی هایدرۆجین و کلۆر.";
+            } else if ((m1 === 'C' && m2 === 'O2') || (m1 === 'O2' && m2 === 'C')) {
+                eqEl.innerText = "C + O₂ → CO₂";
+                descEl.innerText = "ئەمە کارلێکی سووتانی تەواوی کاربۆنە کە گازی کاربۆن دایۆکسید دروست دەکات.";
+            } else if ((m1 === 'HCl' && m2 === 'NaOH') || (m1 === 'NaOH' && m2 === 'HCl')) {
+                eqEl.innerText = "HCl + NaOH → NaCl + H₂O";
+                descEl.innerText = "ئەمە کارلێکی بێلایەنکردنەوەیە (Neutralization) لە نێوان ترش و بنکە، کە خوێ و ئاو دروست دەکات.";
+            } else if ((m1 === 'Na' && m2 === 'H2O') || (m1 === 'H2O' && m2 === 'Na')) {
+                eqEl.innerText = "2Na + 2H₂O → 2NaOH + H₂↑";
+                descEl.innerText = "کارلێکێکی زۆر توند و تەقێنەرە! سۆدیۆم لەگەڵ ئاو کارلێک دەکات و گازی هایدرۆجین ئازاد دەکات.";
+            } else if ((m1 === 'Fe' && m2 === 'O2') || (m1 === 'O2' && m2 === 'Fe')) {
+                eqEl.innerText = "4Fe + 3O₂ → 2Fe₂O₃";
+                descEl.innerText = "ئەمە کارلێکی ئۆکسیدبوونی ئاسنە کە لە ژیانی ڕۆژانەدا بە ژەنگی ئاسن ناسراوە.";
+            } else if ((m1 === 'Fe' && m2 === 'HCl') || (m1 === 'HCl' && m2 === 'Fe')) {
+                eqEl.innerText = "Fe + 2HCl → FeCl₂ + H₂↑";
+                descEl.innerText = "کارلێکی ئاسن لەگەڵ ترش کە تێیدا ئاسن شوێنی هایدرۆجین دەگرێتەوە و گازی H₂ ئازاد دەکات.";
+            } else {
+                eqEl.innerText = `${m1} + ${m2} → پێکهاتەی تێکەڵاو`;
+                descEl.innerText = "ئەم تێکەڵەیە لە تاقیگەدا دەبێتە هۆی دروستبوونی پەیوەندی کیمیایی نوێ و گۆڕڕانی فیزیایی یان کیمیایی.";
+            }
+        }
+
+        function selectQuizType(val, text, e) {
+            if(e) e.stopPropagation();
+            playSound('click');
+            document.getElementById('quiz-type').value = val;
+            document.getElementById('selected-type-text').innerText = text;
+            document.querySelectorAll('#type-menu .app-dropdown-item').forEach(item => item.classList.remove('selected'));
+            if(e && e.target) e.target.classList.add('selected');
+            document.getElementById('type-menu').style.display = 'none';
+
+            let speedBox = document.getElementById('speed-time-container');
+            if (val === 'speed') {
+                speedBox.style.display = 'block';
+            } else {
+                speedBox.style.display = 'none';
+            }
+        }
+
+        function selectSpeedTime(seconds, text, e) {
+            if(e) e.stopPropagation();
+            playSound('click');
+            document.getElementById('speed-seconds').value = seconds;
+            document.getElementById('selected-speed-time-text').innerText = text;
+            document.querySelectorAll('#speed-time-menu .app-dropdown-item').forEach(item => item.classList.remove('selected'));
+            if(e && e.target) e.target.classList.add('selected');
+            document.getElementById('speed-time-menu').style.display = 'none';
+        }
+
+        function selectQuizMode(val, text, e) {
+            if(e) e.stopPropagation();
+            playSound('click');
+            document.getElementById('quiz-mode').value = val;
+            document.getElementById('selected-mode-text').innerText = text;
+            document.querySelectorAll('#mode-menu .app-dropdown-item').forEach(item => item.classList.remove('selected'));
+            if(e && e.target) e.target.classList.add('selected');
+            document.getElementById('mode-menu').style.display = 'none';
+        }
+
+        function selectQuizCategory(val, text, e) {
+            if(e) e.stopPropagation();
+            playSound('click');
+            document.getElementById('quiz-category').value = val;
+            document.getElementById('selected-cat-text').innerText = text;
+            document.querySelectorAll('#cat-menu .app-dropdown-item').forEach(item => item.classList.remove('selected'));
+            if(e && e.target) e.target.classList.add('selected');
+            document.getElementById('cat-menu').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.app-select-box')) {
+                document.querySelectorAll('.app-dropdown-menu').forEach(m => m.style.display = 'none');
+            }
+        }
+
+        const elements = [
+            { number: 1, symbol: "H", nameEn: "Hydrogen", name: "هایدرۆجین", weight: "1.008", category: "ناکانزاکان", class: "nonmetal", state: "گاز", discoverer: "هنری کاڤیندیش", uses: "سووتەمەنی و ئەمۆنیا.", electronConfig: "1s¹", electronegativity: "2.20", meltingPoint: "-259.16 °C", boilingPoint: "-252.87 °C" },
+            { number: 2, symbol: "He", nameEn: "Helium", name: "هیلیۆم", weight: "4.0026", category: "گازە خانەدانەکان", class: "noble-gas", state: "گاز", discoverer: "پیەر جانسەن", uses: "بلۆن و MRI.", electronConfig: "1s²", electronegativity: "-", meltingPoint: "-272.2 °C", boilingPoint: "-268.93 °C" },
+            { number: 3, symbol: "Li", nameEn: "Lithium", name: "لیتیۆم", weight: "6.94", category: "کانزای ئەلکالی", class: "alkali", state: "ڕەق", discoverer: "ئۆگوست ئارفێدسن", uses: "پاتری مۆبایل.", electronConfig: "[He] 2s¹", electronegativity: "0.98", meltingPoint: "180.54 °C", boilingPoint: "1342 °C" },
+            { number: 4, symbol: "Be", nameEn: "Beryllium", name: "بێریلیۆم", weight: "9.0122", category: "کانزای گڵیەی ئەلکالیەکان", class: "alkaline-earth", state: "ڕەق", discoverer: "لویی ڤۆکلین", uses: "کەلوپەلی فڕۆکە.", electronConfig: "[He] 2s²", electronegativity: "1.57", meltingPoint: "1287 °C", boilingPoint: "2469 °C" },
+            { number: 5, symbol: "B", nameEn: "Boron", name: "بۆرۆن", weight: "10.81", category: "نیمچه کانزاکان", class: "metalloid", state: "ڕەق", discoverer: "گەی-لوساک", uses: "شووشەی بەرگگر.", electronConfig: "[He] 2s² 2p¹", electronegativity: "2.04", meltingPoint: "2076 °C", boilingPoint: "3927 °C" },
+            { number: 6, symbol: "C", nameEn: "Carbon", name: "کاربۆن", weight: "12.011", category: "ناکانزاکان", class: "nonmetal", state: "ڕەق", discoverer: "لە دێر زەمانەوە", uses: "ژیان و ئەڵماس.", electronConfig: "[He] 2s² 2p²", electronegativity: "2.55", meltingPoint: "3500 °C", boilingPoint: "4827 °C" },
+            { number: 7, symbol: "N", nameEn: "Nitrogen", name: "نێترۆجین", weight: "14.007", category: "ناکانزاکان", class: "nonmetal", state: "گاز", discoverer: "دانیال رەزەرفۆرد", uses: "پەیینی کیمیایی.", electronConfig: "[He] 2s² 2p³", electronegativity: "3.04", meltingPoint: "-210.1 °C", boilingPoint: "-195.79 °C" },
+            { number: 8, symbol: "O", nameEn: "Oxygen", name: "ئۆکسجین", weight: "15.999", category: "ناکانزاکان", class: "nonmetal", state: "گاز", discoverer: "جۆزێف پریستلی", uses: "هەناسەدان.", electronConfig: "[He] 2s² 2p⁴", electronegativity: "3.44", meltingPoint: "-218.79 °C", boilingPoint: "-182.96 °C" },
+            { number: 9, symbol: "F", nameEn: "Fluorine", name: "فلۆرین", weight: "18.998", category: "هالۆجینەکان", class: "halogen", state: "گاز", discoverer: "هێنری مۆیسان", uses: "معجونی ددان.", electronConfig: "[He] 2s² 2p⁵", electronegativity: "3.98", meltingPoint: "-219.62 °C", boilingPoint: "-188.12 °C" },
+            { number: 10, symbol: "Ne", nameEn: "Neon", name: "نیۆن", weight: "20.180", category: "گازە خانەدانەکان", class: "noble-gas", state: "گاز", discoverer: "مۆریس تراڤەرس", uses: "تابلۆی ڕووناک.", electronConfig: "[He] 2s² 2p⁶", electronegativity: "-", meltingPoint: "-248.59 °C", boilingPoint: "-246.046 °C" },
+            { number: 11, symbol: "Na", nameEn: "Sodium", name: "سۆدیۆم", weight: "22.990", category: "کانزای ئەلکالی", class: "alkali", state: "ڕەق", discoverer: "همفری دەیڤی", uses: "خوێی ڕاکێشەر.", electronConfig: "[Ne] 3s¹", electronegativity: "0.93", meltingPoint: "97.72 °C", boilingPoint: "883 °C" },
+            { number: 12, symbol: "Mg", nameEn: "Magnesium", name: "ماگنیسیۆم", weight: "24.305", category: "کانزای گڵیەی ئەلکالیەکان", class: "alkaline-earth", state: "ڕەق", discoverer: "همفری دەیڤی", uses: "داستاوی سووك.", electronConfig: "[Ne] 3s²", electronegativity: "1.31", meltingPoint: "650 °C", boilingPoint: "1090 °C" },
+            { number: 13, symbol: "Al", nameEn: "Aluminum", name: "ئەلمۆنیۆم", weight: "26.982", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "ئۆستێرد", uses: "فڕۆکە و دەرفەت.", electronConfig: "[Ne] 3s² 3p¹", electronegativity: "1.61", meltingPoint: "660.32 °C", boilingPoint: "2519 °C" },
+            { number: 14, symbol: "Si", nameEn: "Silicon", name: "سلییسیۆم", weight: "28.085", category: "نیمچه کانزاکان", class: "metalloid", state: "ڕەق", discoverer: "بەرزلیۆس", uses: "چیپی ئەلیکترۆنی.", electronConfig: "[Ne] 3s² 3p²", electronegativity: "1.90", meltingPoint: "1414 °C", boilingPoint: "3265 °C" },
+            { number: 15, symbol: "P", nameEn: "Phosphorus", name: "فۆسفۆر", weight: "30.974", category: "ناکانزاکان", class: "nonmetal", state: "ڕەق", discoverer: "هێنینگ براند", uses: "کبریت و پەیین.", electronConfig: "[Ne] 3s² 3p³", electronegativity: "2.19", meltingPoint: "44.15 °C", boilingPoint: "280.5 °C" },
+            { number: 16, symbol: "S", nameEn: "Sulfur", name: "گۆگرت", weight: "32.06", category: "ناکانزاکان", class: "nonmetal", state: "ڕەق", discoverer: "لە دێر زەمانەوە", uses: "ترشەڵۆک.", electronConfig: "[Ne] 3s² 3p⁴", electronegativity: "2.58", meltingPoint: "115.21 °C", boilingPoint: "444.6 °C" },
+            { number: 17, symbol: "Cl", nameEn: "Chlorine", name: "کلۆر", weight: "35.45", category: "هالۆجینەکان", class: "halogen", state: "گاز", discoverer: "کارل شێلی", uses: "پاککردنەوەی ئاو.", electronConfig: "[Ne] 3s² 3p⁵", electronegativity: "3.16", meltingPoint: "-101.5 °C", boilingPoint: "-34.04 °C" },
+            { number: 18, symbol: "Ar", nameEn: "Argon", name: "ئارگۆن", weight: "39.95", category: "گازە خانەدانەکان", class: "noble-gas", state: "گاز", discoverer: "لۆرد ڕەیلی", uses: "گلۆپ.", electronConfig: "[Ne] 3s² 3p⁶", electronegativity: "-", meltingPoint: "-189.35 °C", boilingPoint: "-185.85 °C" },
+            { number: 19, symbol: "K", nameEn: "Potassium", name: "پۆتاسیۆم", weight: "39.098", category: "کانزای ئەلکالی", class: "alkali", state: "ڕەق", discoverer: "همفری دەیڤی", uses: "پەیینی کشتوکاڵ.", electronConfig: "[Ar] 4s¹", electronegativity: "0.82", meltingPoint: "63.38 °C", boilingPoint: "759 °C" },
+            { number: 20, symbol: "Ca", nameEn: "Calcium", name: "کالسێۆم", weight: "40.078", category: "کانزای گڵیەی ئەلکالیەکان", class: "alkaline-earth", state: "ڕەق", discoverer: "همفری دەیڤی", uses: "ئێسک و گەچ.", electronConfig: "[Ar] 4s²", electronegativity: "1.00", meltingPoint: "842 °C", boilingPoint: "1484 °C" },
+            { number: 21, symbol: "Sc", nameEn: "Scandium", name: "سکاندێۆم", weight: "44.956", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "نیلسۆن", uses: "کەلوپەلی وەرزشی.", electronConfig: "[Ar] 3d¹ 4s²", electronegativity: "1.36", meltingPoint: "1541 °C", boilingPoint: "2836 °C" },
+            { number: 22, symbol: "Ti", nameEn: "Titanium", name: "تایتانیۆم", weight: "47.867", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ویلیام گرێگۆر", uses: "ئێسکی دەستکرد.", electronConfig: "[Ar] 3d² 4s²", electronegativity: "1.54", meltingPoint: "1668 °C", boilingPoint: "3287 °C" },
+            { number: 23, symbol: "V", nameEn: "Vanadium", name: "ڤانادیۆم", weight: "50.942", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "دێل ریۆ", uses: "بەهێزکردنی پۆڵا.", electronConfig: "[Ar] 3d³ 4s²", electronegativity: "1.63", meltingPoint: "1910 °C", boilingPoint: "3407 °C" },
+            { number: 24, symbol: "Cr", nameEn: "Chromium", name: "کرۆم", weight: "51.996", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "لویی ڤۆکلین", uses: "دژەژەنگ.", electronConfig: "[Ar] 3d⁵ 4s¹", electronegativity: "1.66", meltingPoint: "1907 °C", boilingPoint: "2671 °C" },
+            { number: 25, symbol: "Mn", nameEn: "Manganese", name: "مانگانیس", weight: "54.938", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "یوهان گان", uses: "دروستکردنی پۆڵا.", electronConfig: "[Ar] 3d⁵ 4s²", electronegativity: "1.55", meltingPoint: "1246 °C", boilingPoint: "2061 °C" },
+            { number: 26, symbol: "Fe", nameEn: "Iron", name: "ئاسن", weight: "55.845", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "لە دێر زەمانەوە", uses: "بیناسازی.", electronConfig: "[Ar] 3d⁶ 4s²", electronegativity: "1.83", meltingPoint: "1538 °C", boilingPoint: "2862 °C" },
+            { number: 27, symbol: "Co", nameEn: "Cobalt", name: "کۆبالت", weight: "58.933", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "گۆرت براند", uses: "پاتری.", electronConfig: "[Ar] 3d⁷ 4s²", electronegativity: "1.88", meltingPoint: "1495 °C", boilingPoint: "2927 °C" },
+            { number: 28, symbol: "Ni", nameEn: "Nickel", name: "نیکڵ", weight: "58.693", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "کرۆنستیدت", uses: "دراوی کانزایی.", electronConfig: "[Ar] 3d⁸ 4s²", electronegativity: "1.91", meltingPoint: "1455 °C", boilingPoint: "2730 °C" },
+            { number: 29, symbol: "Cu", nameEn: "Copper", name: "مس", weight: "63.546", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "لە دێر زەمانەوە", uses: "وایەری کارەبا.", electronConfig: "[Ar] 3d¹⁰ 4s¹", electronegativity: "1.90", meltingPoint: "1084.62 °C", boilingPoint: "2562 °C" },
+            { number: 30, symbol: "Zn", nameEn: "Zinc", name: "توتیا", weight: "65.38", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ئەندرەس مارگراف", uses: "پاراستن لە ژەنگ.", electronConfig: "[Ar] 3d¹⁰ 4s²", electronegativity: "1.65", meltingPoint: "419.53 °C", boilingPoint: "907 °C" },
+            { number: 31, symbol: "Ga", nameEn: "Gallium", name: "گالیۆم", weight: "69.723", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "پۆل لێکۆک", uses: "نیمچەگەیەنەر.", electronConfig: "[Ar] 3d¹⁰ 4s² 4p¹", electronegativity: "1.81", meltingPoint: "29.76 °C", boilingPoint: "2204 °C" },
+            { number: 32, symbol: "Ge", nameEn: "Germanium", name: "جێرمانیۆم", weight: "72.630", category: "نیمچه کانزاکان", class: "metalloid", state: "ڕەق", discoverer: "کلیمێنس ڤینکڵەر", uses: "ئامێری ئۆپتیکی.", electronConfig: "[Ar] 3d¹⁰ 4s² 4p²", electronegativity: "2.01", meltingPoint: "938.25 °C", boilingPoint: "2833 °C" },
+            { number: 33, symbol: "As", nameEn: "Arsenic", name: "ئارسینیک", weight: "74.922", category: "نیمچه کانزاکان", class: "metalloid", state: "ڕەق", discoverer: "ئەلبێرتوس ماگنوس", uses: "ژەهر و سیمی کۆندەکتەر.", electronConfig: "[Ar] 3d¹⁰ 4s² 4p³", electronegativity: "2.18", meltingPoint: "817 °C", boilingPoint: "614 °C" },
+            { number: 34, symbol: "Se", nameEn: "Selenium", name: "سێلینۆم", weight: "78.971", category: "ناکانزاکان", class: "nonmetal", state: "ڕەق", discoverer: "بەرزلیۆس", uses: "شووشەگەری.", electronConfig: "[Ar] 3d¹⁰ 4s² 4p⁴", electronegativity: "2.55", meltingPoint: "221 °C", boilingPoint: "685 °C" },
+            { number: 35, symbol: "Br", nameEn: "Bromine", name: "برۆمین", weight: "79.904", category: "هالۆجینەکان", class: "halogen", state: "شلی", discoverer: "ئانتۆن بالار", uses: "دژەئاگر.", electronConfig: "[Ar] 3d¹⁰ 4s² 4p⁵", electronegativity: "2.96", meltingPoint: "-7.2 °C", boilingPoint: "58.8 °C" },
+            { number: 36, symbol: "Kr", nameEn: "Krypton", name: "کریپتۆن", weight: "83.798", category: "گازە خانەدانەکان", class: "noble-gas", state: "گاز", discoverer: "مۆریس تراڤەرس", uses: "فلاشری فڕۆکەخانە.", electronConfig: "[Ar] 3d¹⁰ 4s² 4p⁶", electronegativity: "3.00", meltingPoint: "-157.36 °C", boilingPoint: "-153.22 °C" },
+            { number: 37, symbol: "Rb", nameEn: "Rubidium", name: "ڕوبیدیۆم", weight: "85.468", category: "کانزای ئەلکالی", class: "alkali", state: "ڕەق", discoverer: "رۆبەرت بونزن", uses: "کاتژمێری ئەتۆمی.", electronConfig: "[Kr] 5s¹", electronegativity: "0.82", meltingPoint: "39.31 °C", boilingPoint: "688 °C" },
+            { number: 38, symbol: "Sr", nameEn: "Strontium", name: "سترۆنسیۆم", weight: "87.62", category: "کانزای گڵیەی ئەلکالیەکان", class: "alkaline-earth", state: "ڕەق", discoverer: "ویلیام کرۆک", uses: "یاری ئاگرین.", electronConfig: "[Kr] 5s²", electronegativity: "0.95", meltingPoint: "777 °C", boilingPoint: "1382 °C" },
+            { number: 39, symbol: "Y", nameEn: "Yttrium", name: "ایتریۆم", weight: "88.906", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "یوهان گەدۆلین", uses: "شاشەی ڕەنگاوڕەنگ.", electronConfig: "[Kr] 4d¹ 5s²", electronegativity: "1.22", meltingPoint: "1522 °C", boilingPoint: "3338 °C" },
+            { number: 40, symbol: "Zr", nameEn: "Zirconium", name: "زیرکۆنیۆم", weight: "91.224", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "مارتین کلابروت", uses: "وێستگەی ئەتۆمی.", electronConfig: "[Kr] 4d² 5s²", electronegativity: "1.33", meltingPoint: "1855 °C", boilingPoint: "4409 °C" },
+            { number: 41, symbol: "Nb", nameEn: "Niobium", name: "نیۆبیۆم", weight: "92.906", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "چارڵز هاتشێت", uses: "پۆڵای بەرگگر.", electronConfig: "[Kr] 4d⁴ 5s¹", electronegativity: "1.6", meltingPoint: "2477 °C", boilingPoint: "4744 °C" },
+            { number: 42, symbol: "Mo", nameEn: "Molybdenum", name: "مۆلیدبنەم", weight: "95.95", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "کارل شێلی", uses: "پۆڵای بەهێز.", electronConfig: "[Kr] 4d⁵ 5s¹", electronegativity: "2.16", meltingPoint: "2623 °C", boilingPoint: "4639 °C" },
+            { number: 43, symbol: "Tc", nameEn: "Technetium", name: "تەکنیسیۆم", weight: "98", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "کارلۆ پێریەر", uses: "پزیشکی ناوکی.", electronConfig: "[Kr] 4d⁵ 5s²", electronegativity: "1.9", meltingPoint: "2157 °C", boilingPoint: "4265 °C" },
+            { number: 44, symbol: "Ru", nameEn: "Ruthenium", name: "رووسێنێۆم", weight: "101.07", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "کارل کلاوس", uses: "خانەی خۆری.", electronConfig: "[Kr] 4d⁷ 5s¹", electronegativity: "2.2", meltingPoint: "2334 °C", boilingPoint: "4150 °C" },
+            { number: 45, symbol: "Rh", nameEn: "Rhodium", name: "رۆدیۆم", weight: "102.91", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ویلیام وۆلاستۆن", uses: "ئاوێنە.", electronConfig: "[Kr] 4d⁸ 5s¹", electronegativity: "2.28", meltingPoint: "1964 °C", boilingPoint: "3695 °C" },
+            { number: 46, symbol: "Pd", nameEn: "Palladium", name: "پالادیۆم", weight: "106.42", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ویلیام وۆلاستۆن", uses: "کەمکردنەوەی ژەهری ئۆتۆمبێل.", electronConfig: "[Kr] 4d¹⁰", electronegativity: "2.20", meltingPoint: "1554.9 °C", boilingPoint: "2963 °C" },
+            { number: 47, symbol: "Ag", nameEn: "Silver", name: "زیو", weight: "107.87", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "لە دێر زەمانەوە", uses: "خشڵ و دراو.", electronConfig: "[Kr] 4d¹⁰ 5s¹", electronegativity: "1.93", meltingPoint: "961.78 °C", boilingPoint: "2162 °C" },
+            { number: 48, symbol: "Cd", nameEn: "Cadmium", name: "کادمیۆم", weight: "112.41", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "کارل سترۆمایەر", uses: "پاتری.", electronConfig: "[Kr] 4d¹⁰ 5s²", electronegativity: "1.69", meltingPoint: "321.07 °C", boilingPoint: "767 °C" },
+            { number: 49, symbol: "In", nameEn: "Indium", name: "ایندیۆم", weight: "114.82", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "فێردیناند ڕایخ", uses: "شاشەی تاچ.", electronConfig: "[Kr] 4d¹⁰ 5s² 5p¹", electronegativity: "1.78", meltingPoint: "156.60 °C", boilingPoint: "2072 °C" },
+            { number: 50, symbol: "Sn", nameEn: "Tin", name: "قەڵای", weight: "118.71", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "لە دێر زەمانەوە", uses: "قەلایکردن.", electronConfig: "[Kr] 4d¹⁰ 5s² 5p²", electronegativity: "1.96", meltingPoint: "231.93 °C", boilingPoint: "2602 °C" },
+            { number: 51, symbol: "Sb", nameEn: "Antimony", name: "ئانتیمۆن", weight: "121.76", category: "نیمچه کانزاکان", class: "metalloid", state: "ڕەق", discoverer: "لە دێر زەمانەوە", uses: "پاتری.", electronConfig: "[Kr] 4d¹⁰ 5s² 5p³", electronegativity: "2.05", meltingPoint: "630.63 °C", boilingPoint: "1587 °C" },
+            { number: 52, symbol: "Te", nameEn: "Tellurium", name: "تێلوریۆم", weight: "127.60", category: "نیمچه کانزاکان", class: "metalloid", state: "ڕەق", discoverer: "فرانز مولەر", uses: "پاتری سۆلار.", electronConfig: "[Kr] 4d¹⁰ 5s² 5p⁴", electronegativity: "2.1", meltingPoint: "449.51 °C", boilingPoint: "988 °C" },
+            { number: 53, symbol: "I", nameEn: "Iodine", name: "ئایۆدین", weight: "126.90", category: "هالۆجینەکان", class: "halogen", state: "ڕەق", discoverer: "بێرنارد کورتا", uses: "پاککردنەوەی برین.", electronConfig: "[Kr] 4d¹⁰ 5s² 5p⁵", electronegativity: "2.66", meltingPoint: "113.7 °C", boilingPoint: "184.3 °C" },
+            { number: 54, symbol: "Xe", nameEn: "Xenon", name: "زێنۆن", weight: "131.29", category: "گازە خانەدانەکان", class: "noble-gas", state: "گاز", discoverer: "مۆریس تراڤەرس", uses: "گلۆپی بەهێز.", electronConfig: "[Kr] 4d¹⁰ 5s² 5p⁶", electronegativity: "2.6", meltingPoint: "-111.7 °C", boilingPoint: "-108.12 °C" },
+            { number: 55, symbol: "Cs", nameEn: "Cesium", name: "سیسیۆم", weight: "132.91", category: "کانزای ئەلکالی", class: "alkali", state: "ڕەق", discoverer: "رۆبەرت بونزن", uses: "کاتژمێری ئەتۆمی.", electronConfig: "[Xe] 6s¹", electronegativity: "0.79", meltingPoint: "28.44 °C", boilingPoint: "671 °C" },
+            { number: 56, symbol: "Ba", nameEn: "Barium", name: "باریۆم", weight: "137.33", category: "کانزای گڵیەی ئەلکالیەکان", class: "alkaline-earth", state: "ڕەق", discoverer: "همفری دەیڤی", uses: "پشکنینی پزیشکی.", electronConfig: "[Xe] 6s²", electronegativity: "0.89", meltingPoint: "727 °C", boilingPoint: "1897 °C" },
+            { number: 57, symbol: "La", nameEn: "Lanthanum", name: "لانۆتانۆم", weight: "138.91", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "کارل مۆساندەر", uses: "تەلەس کۆپ.", electronConfig: "[Xe] 5d¹ 6s²", electronegativity: "1.1", meltingPoint: "920 °C", boilingPoint: "3464 °C" },
+            { number: 58, symbol: "Ce", nameEn: "Cerium", name: "سێریۆم", weight: "140.12", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "مارتین کلابروت", uses: "بەردی چەرخ.", electronConfig: "[Xe] 4f¹ 5d¹ 6s²", electronegativity: "1.12", meltingPoint: "798 °C", boilingPoint: "3443 °C" },
+            { number: 59, symbol: "Pr", nameEn: "Praseodymium", name: "پراسیۆدیۆم", weight: "140.91", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "کارل فۆن ڤێڵسباخ", uses: "ڕەنگکردنی شووشە.", electronConfig: "[Xe] 4f³ 6s²", electronegativity: "1.13", meltingPoint: "931 °C", boilingPoint: "3520 °C" },
+            { number: 60, symbol: "Nd", nameEn: "Neodymium", name: "نیۆدیۆم", weight: "144.24", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "کارل فۆن ڤێڵسباخ", uses: "مەنتیک بەهێز.", electronConfig: "[Xe] 4f⁴ 6s²", electronegativity: "1.14", meltingPoint: "1021 °C", boilingPoint: "3074 °C" },
+            { number: 61, symbol: "Pm", nameEn: "Promethium", name: "پرۆمیسیۆم", weight: "145", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "جەیکوب مارینسکی", uses: "باتری ناوکی.", electronConfig: "[Xe] 4f⁵ 6s²", electronegativity: "1.13", meltingPoint: "1042 °C", boilingPoint: "3000 °C" },
+            { number: 62, symbol: "Sm", nameEn: "Samarium", name: "ساماریۆم", weight: "150.36", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "پۆل لێکۆک", uses: "چارەسەری شێرپەنجە.", electronConfig: "[Xe] 4f⁶ 6s²", electronegativity: "1.17", meltingPoint: "1072 °C", boilingPoint: "1794 °C" },
+            { number: 63, symbol: "Eu", nameEn: "Europium", name: "یۆرۆپیۆم", weight: "151.96", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "ئەوجێن دەلافۆنتین", uses: "شاشەی ڕەنگاوڕەنگ.", electronConfig: "[Xe] 4f⁷ 6s²", electronegativity: "1.2", meltingPoint: "822 °C", boilingPoint: "1529 °C" },
+            { number: 64, symbol: "Gd", nameEn: "Gadolinium", name: "گادۆلینیۆم", weight: "157.25", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "ژان مارینیاک", uses: "MRI.", electronConfig: "[Xe] 4f⁷ 5d¹ 6s²", electronegativity: "1.2", meltingPoint: "1313 °C", boilingPoint: "3273 °C" },
+            { number: 65, symbol: "Tb", nameEn: "Terbium", name: "تێربیۆم", weight: "158.93", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "کارل مۆساندەر", uses: "ڕووناکی سەوز.", electronConfig: "[Xe] 4f⁹ 6s²", electronegativity: "1.2", meltingPoint: "1356 °C", boilingPoint: "3230 °C" },
+            { number: 66, symbol: "Dy", nameEn: "Dysprosium", name: "دیسترۆسیۆم", weight: "162.50", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "پۆل لێکۆک", uses: "بزوێنەری کارەبایی.", electronConfig: "[Xe] 4f¹⁰ 6s²", electronegativity: "1.22", meltingPoint: "1412 °C", boilingPoint: "2567 °C" },
+            { number: 67, symbol: "Ho", nameEn: "Holmium", name: "هۆڵمیۆم", weight: "164.93", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "مارک دێلافۆنتین", uses: "لێزەر.", electronConfig: "[Xe] 4f¹¹ 6s²", electronegativity: "1.23", meltingPoint: "1474 °C", boilingPoint: "2700 °C" },
+            { number: 68, symbol: "Er", nameEn: "Erbium", name: "ێربیۆم", weight: "167.26", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "کارل مۆساندەر", uses: "فایبەر ئۆپتیک.", electronConfig: "[Xe] 4f¹² 6s²", electronegativity: "1.24", meltingPoint: "1529 °C", boilingPoint: "2868 °C" },
+            { number: 69, symbol: "Tm", nameEn: "Thulium", name: "سۆلیۆم", weight: "168.93", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "پێر کلێڤ", uses: "تیشکی ئێکس.", electronConfig: "[Xe] 4f¹³ 6s²", electronegativity: "1.25", meltingPoint: "1545 °C", boilingPoint: "1950 °C" },
+            { number: 70, symbol: "Yb", nameEn: "Ytterbium", name: "یتێربیۆم", weight: "173.05", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "ژان مارینیاک", uses: "کاتژمێری ئەتۆمی.", electronConfig: "[Xe] 4f¹⁴ 6s²", electronegativity: "1.1", meltingPoint: "819 °C", boilingPoint: "1196 °C" },
+            { number: 71, symbol: "Lu", nameEn: "Lutetium", name: "لۆتیسیۆم", weight: "174.97", category: "لانتەنایدەکان", class: "lanthanide", state: "ڕەق", discoverer: "ژۆرژ ئۆربان", uses: "PET Scan.", electronConfig: "[Xe] 4f¹⁴ 5d¹ 6s²", electronegativity: "1.27", meltingPoint: "1663 °C", boilingPoint: "3402 °C" },
+            { number: 72, symbol: "Hf", nameEn: "Hafnium", name: "هافنیۆم", weight: "178.49", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "دیرک کۆستەر", uses: "وێستگەی ئەتۆمی.", electronConfig: "[Xe] 4f¹⁴ 5d² 6s²", electronegativity: "1.3", meltingPoint: "2233 °C", boilingPoint: "4603 °C" },
+            { number: 73, symbol: "Ta", nameEn: "Tantalum", name: "تانتالۆم", weight: "180.95", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ئەندریس ئێکەبێرگ", uses: "چاندنی ئێسک.", electronConfig: "[Xe] 4f¹⁴ 5d³ 6s²", electronegativity: "1.5", meltingPoint: "3017 °C", boilingPoint: "5458 °C" },
+            { number: 74, symbol: "W", nameEn: "Tungsten", name: "تۆنگستن", weight: "183.84", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "فاوستۆ دێلویار", uses: "ڕیشاڵی گلۆپ.", electronConfig: "[Xe] 4f¹⁴ 5d⁴ 6s²", electronegativity: "2.36", meltingPoint: "3422 °C", boilingPoint: "5555 °C" },
+            { number: 75, symbol: "Re", nameEn: "Rhenium", name: "رینیۆم", weight: "186.21", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ڤالەر نۆداک", uses: "بزوێنەری فڕۆکە.", electronConfig: "[Xe] 4f¹⁴ 5d⁵ 6s²", electronegativity: "1.9", meltingPoint: "3186 °C", boilingPoint: "5596 °C" },
+            { number: 76, symbol: "Os", nameEn: "Osmium", name: "ئۆسمیۆم", weight: "190.23", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ویلیام وۆلاستۆن", uses: "قورسترین توخم.", electronConfig: "[Xe] 4f¹⁴ 5d⁶ 6s²", electronegativity: "2.2", meltingPoint: "3033 °C", boilingPoint: "5012 °C" },
+            { number: 77, symbol: "Ir", nameEn: "Iridium", name: "ئایریدێۆم", weight: "192.22", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ویلیام وۆلاستۆن", uses: "بەرگگری ژەنگ.", electronConfig: "[Xe] 4f¹⁴ 5d⁷ 6s²", electronegativity: "2.2", meltingPoint: "2446 °C", boilingPoint: "4428 °C" },
+            { number: 78, symbol: "Pt", nameEn: "Platinum", name: "پلاتین", weight: "195.08", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ئانتۆنیۆ دێ ۆیۆا", uses: "خشڵ.", electronConfig: "[Xe] 4f¹⁴ 5d⁹ 6s¹", electronegativity: "2.28", meltingPoint: "1768.3 °C", boilingPoint: "3825 °C" },
+            { number: 79, symbol: "Au", nameEn: "Gold", name: "زێڕ", weight: "196.97", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "لە دێر زەمانەوە", uses: "خشڵ و بانک.", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s¹", electronegativity: "2.54", meltingPoint: "1064.18 °C", boilingPoint: "2856 °C" },
+            { number: 80, symbol: "Hg", nameEn: "Mercury", name: "جیۆ", weight: "200.59", category: "کانزا گواستراوەکان", class: "transition", state: "شلی", discoverer: "لە دێر زەمانەوە", uses: "ترمۆمێتەر.", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s²", electronegativity: "2.00", meltingPoint: "-38.83 °C", boilingPoint: "356.73 °C" },
+            { number: 81, symbol: "Tl", nameEn: "Thallium", name: "تالیۆم", weight: "204.38", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "ویلیام کروکس", uses: "پزشکی.", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹", electronegativity: "1.62", meltingPoint: "304 °C", boilingPoint: "1473 °C" },
+            { number: 82, symbol: "Pb", nameEn: "Lead", name: "سەپان", weight: "207.2", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "لە دێر زەمانەوە", uses: "پاتری ئۆتۆمبێل.", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²", electronegativity: "2.33", meltingPoint: "327.46 °C", boilingPoint: "1749 °C" },
+            { number: 83, symbol: "Bi", nameEn: "Bismuth", name: "بیزمۆس", weight: "208.98", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "کلۆد دێ مۆنتین", uses: "دەرمانی گەدە.", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³", electronegativity: "2.02", meltingPoint: "271.40 °C", boilingPoint: "1564 °C" },
+            { number: 84, symbol: "Po", nameEn: "Polonium", name: "پۆلۆنیۆم", weight: "209", category: "نیمچه کانزاکان", class: "metalloid", state: "ڕەق", discoverer: "ماری کورێ", uses: "تیشکدەر.", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴", electronegativity: "2.0", meltingPoint: "254 °C", boilingPoint: "962 °C" },
+            { number: 85, symbol: "At", nameEn: "Astatine", name: "ئەستاتین", weight: "210", category: "هالۆجینەکان", class: "halogen", state: "ڕەق", discoverer: "دەیڵ کۆرسۆن", uses: "پزیشکی.", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵", electronegativity: "2.2", meltingPoint: "302 °C", boilingPoint: "337 °C" },
+            { number: 86, symbol: "Rn", nameEn: "Radon", name: "ڕادۆن", weight: "222", category: "گازە خانەدانەکان", class: "noble-gas", state: "گاز", discoverer: "فریدریش دۆمۆن", uses: "چارەسەری شێرپەنجە.", electronConfig: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶", electronegativity: "-", meltingPoint: "-71 °C", boilingPoint: "-61.7 °C" },
+            { number: 87, symbol: "Fr", nameEn: "Francium", name: "فرانسۆم", weight: "223", category: "کانزای ئەلکالی", class: "alkali", state: "ڕەق", discoverer: "مارگوریت پێری", uses: "توخمی تیشکدەر.", electronConfig: "[Rn] 7s¹", electronegativity: "0.7", meltingPoint: "27 °C", boilingPoint: "677 °C" },
+            { number: 88, symbol: "Ra", nameEn: "Radium", name: "ڕادیۆم", weight: "226", category: "کانزای گڵیەی ئەلکالیەکان", class: "alkaline-earth", state: "ڕەق", discoverer: "ماری کورێ", uses: "تیشکدەر.", electronConfig: "[Rn] 7s²", electronegativity: "0.9", meltingPoint: "700 °C", boilingPoint: "1737 °C" },
+            { number: 89, symbol: "Ac", nameEn: "Actinium", name: "ئاکتینیۆم", weight: "227", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "فریدریش گیزل", uses: "تیشکی نیۆترۆن.", electronConfig: "[Rn] 6d¹ 7s²", electronegativity: "1.1", meltingPoint: "1050 °C", boilingPoint: "3198 °C" },
+            { number: 90, symbol: "Th", nameEn: "Thorium", name: "ثۆریۆم", weight: "232.04", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "بەرزلیۆس", uses: "سووتەمەنی ئەتۆمی.", electronConfig: "[Rn] 6d² 7s²", electronegativity: "1.3", meltingPoint: "1750 °C", boilingPoint: "4788 °C" },
+            { number: 91, symbol: "Pa", nameEn: "Protactinium", name: "پڕۆتاکتینیۆم", weight: "231.04", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "کازیمیرز فایانس", uses: "تاقیگەیی.", electronConfig: "[Rn] 5f² 6d¹ 7s²", electronegativity: "1.5", meltingPoint: "1568 °C", boilingPoint: "4027 °C" },
+            { number: 92, symbol: "U", nameEn: "Uranium", name: "یۆرانیۆم", weight: "238.03", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "مارتین کلابروت", uses: "سووتەمەنی ئەتۆمی.", electronConfig: "[Rn] 5f³ 6d¹ 7s²", electronegativity: "1.38", meltingPoint: "1132.2 °C", boilingPoint: "4131 °C" },
+            { number: 93, symbol: "Np", nameEn: "Neptunium", name: "نێپتۆنیۆم", weight: "237", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "ئیدوین مەکمیلەن", uses: "فیزیای ئەتۆمی.", electronConfig: "[Rn] 5f⁴ 6d¹ 7s²", electronegativity: "1.36", meltingPoint: "644 °C", boilingPoint: "3902 °C" },
+            { number: 94, symbol: "Pu", nameEn: "Plutonium", name: "پلوتۆنیۆم", weight: "244", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "گلێن سیبۆرگ", uses: "چەکی ئەتۆمی.", electronConfig: "[Rn] 5f⁶ 7s²", electronegativity: "1.28", meltingPoint: "639.4 °C", boilingPoint: "3228 °C" },
+            { number: 95, symbol: "Am", nameEn: "Americium", name: "ئەمێریسیۆم", weight: "243", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "گلێن سیبۆرگ", uses: "ئاگادارکەرەوەی دووکەڵ.", electronConfig: "[Rn] 5f⁷ 7s²", electronegativity: "1.3", meltingPoint: "1176 °C", boilingPoint: "2607 °C" },
+            { number: 96, symbol: "Cm", nameEn: "Curium", name: "کوریۆم", weight: "247", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "گلێن سیبۆرگ", uses: "ئامێری مارس.", electronConfig: "[Rn] 5f⁷ 6d¹ 7s²", electronegativity: "1.3", meltingPoint: "1345 °C", boilingPoint: "3110 °C" },
+            { number: 97, symbol: "Bk", nameEn: "Berkelium", name: "بێرکیلیۆم", weight: "247", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "لۆرانس برکلی", uses: "توخمی دەستکرد.", electronConfig: "[Rn] 5f⁹ 7s²", electronegativity: "1.3", meltingPoint: "986 °C", boilingPoint: "2627 °C" },
+            { number: 98, symbol: "Cf", nameEn: "Californium", name: "کالیفۆڕنیۆم", weight: "251", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "لۆرانس برکلی", uses: "سەرچاوەی نیۆترۆن.", electronConfig: "[Rn] 5f¹⁰ 7s²", electronegativity: "1.3", meltingPoint: "900 °C", boilingPoint: "1470 °C" },
+            { number: 99, symbol: "Es", nameEn: "Einsteinium", name: "ئاینشتاینیۆم", weight: "252", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "تیمی ئەلبرت ئاینشتاین", uses: "لێکۆڵینەوە.", electronConfig: "[Rn] 5f¹¹ 7s²", electronegativity: "1.3", meltingPoint: "860 °C", boilingPoint: "1269 °C" },
+            { number: 100, symbol: "Fm", nameEn: "Fermium", name: "فێرمیۆم", weight: "257", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "لۆرانس برکلی", uses: "فیزیای ئەتۆمی.", electronConfig: "[Rn] 5f¹² 7s²", electronegativity: "1.3", meltingPoint: "1527 °C", boilingPoint: "-" },
+            { number: 101, symbol: "Md", nameEn: "Mendelevium", name: "مێندێلیۆم", weight: "258", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "لۆرانس برکلی", uses: "بە ناوی مێندێلیێڤ.", electronConfig: "[Rn] 5f¹³ 7s²", electronegativity: "1.3", meltingPoint: "827 °C", boilingPoint: "-" },
+            { number: 102, symbol: "No", nameEn: "Nobelium", name: "نۆبیلیۆم", weight: "259", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "ناوەندی نۆبڵ", uses: "تیشکدەر.", electronConfig: "[Rn] 5f¹⁴ 7s²", electronegativity: "1.3", meltingPoint: "827 °C", boilingPoint: "-" },
+            { number: 103, symbol: "Lr", nameEn: "Lawrencium", name: "لۆڕێنسیۆم", weight: "266", category: "ئەکتینای دەکان", class: "actinide", state: "ڕەق", discoverer: "لۆرانس برکلی", uses: "داهێنەری سیکڵۆترۆن.", electronConfig: "[Rn] 5f¹⁴ 7s² 7p¹", electronegativity: "1.3", meltingPoint: "1627 °C", boilingPoint: "-" },
+            { number: 104, symbol: "Rf", nameEn: "Rutherfordium", name: "ڕەزەرفۆردیۆم", weight: "267", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "دووبنا و برکلی", uses: "دەستکرد.", electronConfig: "[Rn] 5f¹⁴ 6d² 7s²", electronegativity: "-", meltingPoint: "2100 °C", boilingPoint: "5500 °C" },
+            { number: 105, symbol: "Db", nameEn: "Dubnium", name: "دوبنیۆم", weight: "268", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "ناوەندی دووبنا", uses: "تاقیگەیی.", electronConfig: "[Rn] 5f¹⁴ 6d³ 7s²", electronegativity: "-", meltingPoint: "-", boilingPoint: "-" },
+            { number: 106, symbol: "Sg", nameEn: "Seaborgium", name: "سیبۆرگیۆم", weight: "269", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "لۆرانس برکلی", uses: "دەستکردی تیشکدەر.", electronConfig: "[Rn] 5f¹⁴ 6d⁴ 7s²", electronegativity: "-", meltingPoint: "-", boilingPoint: "-" },
+            { number: 107, symbol: "Bh", nameEn: "Bohrium", name: "بۆرێۆم", weight: "270", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "تیمی ئەڵمانی", uses: "دەستکرد.", electronConfig: "[Rn] 5f¹⁴ 6d⁵ 7s²", electronegativity: "-", meltingPoint: "-", boilingPoint: "-" },
+            { number: 108, symbol: "Hs", nameEn: "Hassium", name: "هاسیۆم", weight: "277", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "تیمی ئەڵمانی", uses: "دەستکرد.", electronConfig: "[Rn] 5f¹⁴ 6d⁶ 7s²", electronegativity: "-", meltingPoint: "-", boilingPoint: "-" },
+            { number: 109, symbol: "Mt", nameEn: "Meitnerium", name: "مایتنێۆم", weight: "278", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "تیمی ئەڵمانی", uses: "لیز مایتنەر.", electronConfig: "[Rn] 5f¹⁴ 6d⁷ 7s²", electronegativity: "-", meltingPoint: "-", boilingPoint: "-" },
+            { number: 110, symbol: "Ds", nameEn: "Darmstadtium", name: "دارمشتاستیۆم", weight: "281", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "تیمی ئەڵمانی", uses: "دەستکرد.", electronConfig: "[Rn] 5f¹⁴ 6d⁸ 7s²", electronegativity: "-", meltingPoint: "-", boilingPoint: "-" },
+            { number: 111, symbol: "Rg", nameEn: "Roentgenium", name: "رۆنتجێنیۆم", weight: "282", category: "کانزا گواستراوەکان", class: "transition", state: "ڕەق", discoverer: "تیمی ئەڵمانی", uses: "ڕۆنتجێن.", electronConfig: "[Rn] 5f¹⁴ 6d⁹ 7s²", electronegativity: "-", meltingPoint: "-", boilingPoint: "-" },
+            { number: 112, symbol: "Cn", nameEn: "Copernicium", name: "کۆپەرسیمیۆم", weight: "285", category: "کانزا گواستراوەکان", class: "transition", state: "شلی", discoverer: "تیمی ئەڵمانی", uses: "دەستکردی شل.", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s²", electronegativity: "-", meltingPoint: "-", boilingPoint: "357 °C" },
+            { number: 113, symbol: "Nh", nameEn: "Nihonium", name: "نیهۆنیۆم", weight: "286", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "ناوەندی ڕایکێن", uses: "توخمی ژاپۆنی.", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹", electronegativity: "-", meltingPoint: "430 °C", boilingPoint: "1130 °C" },
+            { number: 114, symbol: "Fl", nameEn: "Flerovium", name: "فلێڕۆڤیۆم", weight: "289", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "ناوەندی دووبنا", uses: "دەستکرد.", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²", electronegativity: "-", meltingPoint: "70 °C", boilingPoint: "150 °C" },
+            { number: 115, symbol: "Mc", nameEn: "Moscovium", name: "مۆسکۆڤیۆم", weight: "290", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "دووبنا و برکلی", uses: "دەستکرد.", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³", electronegativity: "-", meltingPoint: "400 °C", boilingPoint: "1100 °C" },
+            { number: 116, symbol: "Lv", nameEn: "Livermorium", name: "لیڤرۆمۆڵیۆم", weight: "293", category: "کانزا گواستراوەکانی تر", class: "other-transition", state: "ڕەق", discoverer: "لاورینۆرمۆر", uses: "دەستکرد.", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴", electronegativity: "-", meltingPoint: "435 °C", boilingPoint: "812 °C" },
+            { number: 117, symbol: "Ts", nameEn: "Tennessine", name: "تەنەسینیۆم", weight: "294", category: "هالۆجینەکان", class: "halogen", state: "ڕەق", discoverer: "ئۆک ڕیدج", uses: "دەستکردی هالۆجین.", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵", electronegativity: "-", meltingPoint: "450 °C", boilingPoint: "610 °C" },
+            { number: 118, symbol: "Og", nameEn: "Oganesson", name: "ئۆگانسۆن", weight: "294", category: "گازە خانەدانەکان", class: "noble-gas", state: "گاز", discoverer: "جۆینت ئینستیتیوت", uses: "قورسترین توخمی دروستکراو.", electronConfig: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶", electronegativity: "-", meltingPoint: "52 °C", boilingPoint: "177 °C" }
+        ];
+
+        function displayElements(items) {
+            const listContainer = document.getElementById('elements-list');
+            const details = document.getElementById('details');
+            listContainer.innerHTML = '';
+
+            items.forEach(elData => {
+                const card = document.createElement('div');
+                card.classList.add('element-card', elData.class);
+                card.innerHTML = `
+                    <div class="el-num">${elData.number}</div>
+                    <div class="el-symbol">${elData.symbol}</div>
+                    <div class="el-name-ku">${elData.name} ${elData.number}</div>
+                    <div class="el-name-en">${elData.nameEn}</div>
+                `;
+                
+                card.onclick = () => {
+                    playSound('click');
+                    document.querySelectorAll('.element-card').forEach(c => c.style.border = '1px solid var(--card-border)');
+                    card.style.border = '2px solid #818cf8';
+                    currentSelectedElement = elData;
+
+                    details.style.display = 'block';
+                    document.getElementById('det-title').innerHTML = `${elData.name} (${elData.nameEn} - ${elData.symbol})`;
+                    document.getElementById('det-num').innerHTML = `<strong>ژمارەی گەردیلەیی:</strong> ${elData.number}`;
+                    document.getElementById('det-weight').innerHTML = `<strong>کێشی گەردیلەیی:</strong> ${elData.weight} u`;
+                    document.getElementById('det-state').innerHTML = `<strong>دۆخی ماددە:</strong> ${elData.state}`;
+                    document.getElementById('det-discoverer').innerHTML = `<strong>دۆزەرەوە:</strong> ${elData.discoverer}`;
+                    document.getElementById('det-uses').innerHTML = `<strong>بەکارهێنان:</strong> ${elData.uses}`;
+                    
+                    const catBadge = document.getElementById('det-cat');
+                    catBadge.innerText = `پۆلێن: ${elData.category}`;
+                    catBadge.className = "category-badge " + elData.class;
+
+                    updateFavButtonState();
+                    details.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                };
+
+                listContainer.appendChild(card);
+            });
+        }
+
+        function toggleCurrentFavorite() {
+            if(!currentSelectedElement) return;
+            playSound('success');
+            let idx = favorites.indexOf(currentSelectedElement.number);
+            if(idx > -1) {
+                favorites.splice(idx, 1);
+            } else {
+                favorites.push(currentSelectedElement.number);
+            }
+            localStorage.setItem('chem_favs', JSON.stringify(favorites));
+            updateFavButtonState();
+        }
+
+        function updateFavButtonState() {
+            if(!currentSelectedElement) return;
+            let btn = document.getElementById('fav-toggle-btn');
+            if(favorites.includes(currentSelectedElement.number)) {
+                btn.innerHTML = '⭐ لادان لە دڵخواز';
+            } else {
+                btn.innerHTML = '⭐ زیادکردن بۆ دڵخواز';
+            }
+        }
+
+        function filterByCategory(type, btn) {
+            playSound('click');
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            let filtered = elements;
+            if (type === 'fav') {
+                filtered = elements.filter(el => favorites.includes(el.number));
+            } else if (type === 'heavy') {
+                filtered = elements.filter(el => parseFloat(el.weight) > 200 || el.number > 90);
+            } else if (type === 'gas') {
+                filtered = elements.filter(el => el.state === 'گاز');
+            } else if (type === 'liquid') {
+                filtered = elements.filter(el => el.state === 'شلی');
+            } else if (type === 'solid') {
+                filtered = elements.filter(el => el.state === 'ڕەق');
+            } else if (type === 'metal') {
+                filtered = elements.filter(el => el.class.includes('transition') || el.class.includes('alkali'));
+            } else if (type === 'nonmetal') {
+                filtered = elements.filter(el => el.class === 'nonmetal' || el.class === 'noble-gas');
+            } else if (type === 'metalloid') {
+                filtered = elements.filter(el => el.class === 'metalloid');
+            }
+            displayElements(filtered);
+        }
+
+        function openAcademicModal() {
+            playSound('click');
+            if(!currentSelectedElement) return;
+            let el = currentSelectedElement;
+            document.getElementById('ac-modal-title').innerText = `⚛️ زانیاری ئەکادیمی: ${el.name} (${el.nameEn})`;
+            document.getElementById('ac-modal-desc').innerHTML = `
+                <strong>هێما:</strong> ${el.symbol} | <strong>ژمارەی گەردیلەیی:</strong> ${el.number}<br>
+                <strong>کێشی گەردیلەیی:</strong> ${el.weight} u<br>
+                <strong>دابەشبوونی ئەلکترۆنی:</strong> ${el.electronConfig}<br>
+                <strong>هێزی ڕکێشی ئەلکترۆنی:</strong> ${el.electronegativity}<br>
+                <strong>پلەی تووخان:</strong> ${el.meltingPoint}<br>
+                <strong>پلەی کوڵان:</strong> ${el.boilingPoint}<br>
+                <strong>پۆلێنی زانستی:</strong> ${el.category}<br>
+                <strong>دۆزەرەوە:</strong> ${el.discoverer}<br>
+                <strong>بەکارهێنانی سەرەکی:</strong> ${el.uses}
+            `;
+            document.getElementById('academic-modal').style.display = 'flex';
+        }
+
+        function closeAcademicModal() {
+            playSound('click');
+            document.getElementById('academic-modal').style.display = 'none';
+        }
+
+        function filterElements() {
+            const query = document.getElementById('search-box').value.toLowerCase();
+            const filtered = elements.filter(el => 
+                el.name.toLowerCase().includes(query) ||
+                el.nameEn.toLowerCase().includes(query) ||
+                el.symbol.toLowerCase().includes(query) ||
+                el.number.toString().includes(query)
+            );
+            displayElements(filtered);
+        }
+
+        displayElements(elements);
+
+        let activeQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let quizTimer = null;
+        let timeLeft = 30;
+        let stopwatchTimer = null;
+        let elapsedSeconds = 0;
+
+        function startQuiz() {
+            playSound('success');
+            let fromNum = parseInt(document.getElementById('from-num').value) || 1;
+            let toNum = parseInt(document.getElementById('to-num').value) || 20;
+            currentIndex = 0; score = 0; elapsedSeconds = 0;
+            
+            let category = document.getElementById('quiz-category').value;
+            let quizType = document.getElementById('quiz-type').value;
+            let chosenSeconds = parseInt(document.getElementById('speed-seconds').value) || 30;
+            timeLeft = chosenSeconds;
+
+            if (category === 'elements') {
+                activeQuestions = elements.filter(el => el.number >= fromNum && el.number <= toNum)
+                                          .map(el => {
+                                              let similarOptions = [el];
+                                              let otherEls = elements.filter(x => x.number !== el.number);
+                                              otherEls.sort((a, b) => Math.abs(a.number - el.number) - Math.abs(b.number - el.number));
+                                              
+                                              for(let i = 0; i < 3 && i < otherEls.length; i++) {
+                                                  similarOptions.push(otherEls[i]);
+                                              }
+
+                                              let opts = similarOptions.map(item => `${item.symbol}${item.number}`);
+                                              opts.sort(() => Math.random() - 0.5);
+
+                                              return {
+                                                  q: `هێما و ژمارەی گەردیلەیی توخمی (${el.name} - ${el.nameEn}) بنووسە:`,
+                                                  correct: `${el.symbol}${el.number}`,
+                                                  options: opts
+                                              };
+                                          });
+            } else if (category === 'base-units') {
+                activeQuestions = [
+                    { q: "یەکەی بنەڕەتی درێژی لە سیستمی SI چیدەبێت؟", correct: "m", options: ["m", "kg", "s", "K"] },
+                    { q: "یەکەی بنەڕەتی بارستە لە سیستمی SI چیدەبێت؟", correct: "kg", options: ["g", "kg", "mg", "mol"] },
+                    { q: "یەکەی بنەڕەتی کات لە سیستمی SI چییە؟", correct: "s", options: ["min", "h", "s", "m"] }
+                ];
+            } else if (category === 'prefix-units') {
+                activeQuestions = [
+                    { q: "کورتەی پێشگری (Kilo) چییە؟", correct: "k", options: ["k", "M", "m", "c"] },
+                    { q: "کورتەی پێشگری (Mega) چییە؟", correct: "M", options: ["m", "M", "k", "n"] }
+                ];
+            } else {
+                activeQuestions = [
+                    { q: "یەکەی وەرگیراوی ڕووبەر لە سیستمی SI چییە؟", correct: "m²", options: ["m", "m²", "m³", "kg/m³"] },
+                    { q: "یەکەی وەرگیراوی وزە لە سیستمی SI چییە؟", correct: "J", options: ["N", "J", "W", "Pa"] }
+                ];
+            }
+
+            activeQuestions.sort(() => Math.random() - 0.5);
+            document.getElementById('quiz-setup').style.display = 'none';
+            document.getElementById('quiz-play').style.display = 'block';
+            
+            let timerBox = document.getElementById('quiz-timer-box');
+            let stopwatchBox = document.getElementById('quiz-stopwatch-box');
+            
+            clearInterval(quizTimer);
+            clearInterval(stopwatchTimer);
+
+            if (quizType === 'speed') {
+                timerBox.style.display = 'block';
+                stopwatchBox.style.display = 'none';
+                document.getElementById('time-left').innerText = timeLeft;
+                quizTimer = setInterval(() => {
+                    timeLeft--;
+                    document.getElementById('time-left').innerText = timeLeft;
+                    if(timeLeft <= 0) {
+                        clearInterval(quizTimer);
+                        endQuiz();
+                    }
+                }, 1000);
+            } else {
+                timerBox.style.display = 'none';
+                stopwatchBox.style.display = 'block';
+                document.getElementById('elapsed-time').innerText = elapsedSeconds;
+                stopwatchTimer = setInterval(() => {
+                    elapsedSeconds++;
+                    document.getElementById('elapsed-time').innerText = elapsedSeconds;
+                }, 1000);
+            }
+
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            let quizType = document.getElementById('quiz-type').value;
+            let quizMode = document.getElementById('quiz-mode').value;
+
+            if (currentIndex >= activeQuestions.length || (quizType === 'speed' && timeLeft <= 0)) {
+                endQuiz();
+                return;
+            }
+            let qObj = activeQuestions[currentIndex];
+            document.getElementById('question-text').innerText = `پرسیاری ${currentIndex + 1}:\n${qObj.q}`;
+            let optsDiv = document.getElementById('mcq-options');
+            let textAnsBox = document.getElementById('text-answer-container');
+
+            if (quizMode === 'text') {
+                optsDiv.style.display = 'none';
+                textAnsBox.style.display = 'flex';
+                document.getElementById('user-text-answer').value = '';
+                document.getElementById('user-text-answer').focus();
+            } else {
+                textAnsBox.style.display = 'none';
+                optsDiv.style.display = 'block';
+
+                optsDiv.innerHTML = '';
+                qObj.options.forEach(opt => {
+                    let btn = document.createElement('button');
+                    btn.classList.add('option-btn');
+                    btn.innerText = opt;
+                    btn.onclick = () => {
+                        let allBtns = optsDiv.querySelectorAll('.option-btn');
+                        allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+                        let isCorrect = (opt.toLowerCase() === qObj.correct.toLowerCase());
+                        if (isCorrect) { 
+                            btn.classList.add('correct-glow'); 
+                            score++; 
+                            playSound('success'); 
+                        } else { 
+                            btn.classList.add('wrong-glow'); 
+                            playSound('click'); 
+                            allBtns.forEach(b => {
+                                if(b.innerText.toLowerCase() === qObj.correct.toLowerCase()) {
+                                    b.classList.add('correct-glow');
+                                }
+                            });
+                        }
+
+                        setTimeout(() => {
+                            currentIndex++;
+                            loadQuizQuestion();
+                        }, 700);
+                    };
+                    optsDiv.appendChild(btn);
+                });
+            }
+        }
+
+        function submitTextAnswer() {
+            let userAns = document.getElementById('user-text-answer').value.trim();
+            let qObj = activeQuestions[currentIndex];
+            if (!userAns) return;
+
+            let isCorrect = (userAns.toLowerCase() === qObj.correct.toLowerCase());
+            if (isCorrect) {
+                score++;
+                playSound('success');
+            } else {
+                playSound('click');
+            }
+            currentIndex++;
+            loadQuizQuestion();
+        }
+
+        function endQuiz() {
+            clearInterval(quizTimer);
+            clearInterval(stopwatchTimer);
+            document.getElementById('quiz-play').style.display = 'none';
+            document.getElementById('quiz-results').style.display = 'block';
+            document.getElementById('score-text').innerText = `${userName}، نمرەکەت: ${score} لە ${activeQuestions.length}`;
+            
+            let quizType = document.getElementById('quiz-type').value;
+            let swResult = document.getElementById('stopwatch-result-text');
+            if (quizType === 'normal') {
+                swResult.innerText = `⏱️ کۆۆی کاتی بەکارهاتوو بۆ تەواوکردنی پرسیارەکان: ${elapsedSeconds} چرکە`;
+                swResult.style.display = 'block';
+            } else {
+                swResult.style.display = 'none';
+            }
+        }
+
+        function resetQuiz() {
+            playSound('click');
+            clearInterval(quizTimer);
+            clearInterval(stopwatchTimer);
+            document.getElementById('quiz-setup').style.display = 'block';
+            document.getElementById('quiz-results').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
